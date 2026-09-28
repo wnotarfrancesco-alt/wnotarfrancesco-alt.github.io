@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-9ymvMzcFsA9Z4yBAf1O/eRI0RXy14omq3vAT9I5IYaQ='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-IbAYEfyXjGAINWqdlUv6KG5+83ehKwzSmS2T1nNOnEY='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0F1D">
@@ -22,8 +22,6 @@
 @font-face { font-family: "Cinzel"; src: url(fonts/cinzel.woff2) format("woff2"); font-weight: 400 900; font-display: swap; }
 @font-face { font-family: "Outfit"; src: url(fonts/outfit.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "JetBrains Mono"; src: url(fonts/jbmono.woff2) format("woff2"); font-weight: 100 800; font-display: swap; }
-/* Installed app runs edge to edge under the status bar */
-body .wrap { padding-top: env(safe-area-inset-top, 0px); }
 </style>
 <style>
 /* Layout: a single-column imperial war council. Dark by design: ink-navy field, gold leaf, imperial crimson.
@@ -49,7 +47,7 @@ body .wrap { padding-top: env(safe-area-inset-top, 0px); }
   color-scheme: dark;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; }
+html, body { height: 100%; overflow: hidden; }
 body {
   margin: 0; color: var(--parch); font: 400 16px/1.45 var(--body);
   background:
@@ -67,7 +65,10 @@ body::before {
 button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; background: none; border: 0; padding: 0; }
 button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 textarea { -webkit-user-select: text; user-select: text; }
-.wrap { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding-inline: 16px; padding-block: 0 calc(104px + env(safe-area-inset-bottom, 0px)); }
+/* App shell: the screen is a fixed frame. Only .scroller scrolls, so the tab bar never moves. */
+.app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; height: 100%; padding-top: env(safe-area-inset-top, 0px); }
+.scroller { position: relative; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; overflow-anchor: none; }
+.wrap { position: relative; max-width: 540px; margin: 0 auto; padding-inline: 16px; padding-block: 0 28px; }
 
 /* ---------- Header ---------- */
 .top { display: flex; align-items: center; justify-content: space-between; padding-block: 14px 12px; gap: 12px; }
@@ -79,7 +80,7 @@ textarea { -webkit-user-select: text; user-select: text; }
 .icon-btn svg { width: 19px; height: 19px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
 
 /* ---------- Tabs ---------- */
-.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px);
+.tabs { position: relative; flex: none; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px); transform: translateZ(0);
   background: linear-gradient(180deg, rgba(10,15,29,.72), rgba(10,15,29,.96)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); }
 .tabs-in { max-width: 540px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
 .tab { min-height: 56px; padding: 10px 2px 12px; display: grid; justify-items: center; gap: 4px; color: var(--muted); font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; position: relative; }
@@ -308,8 +309,8 @@ p { margin: 0; }
 .toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 23px; height: 23px; border-radius: 50%; background: var(--parch); transition: transform .22s cubic-bezier(.2,.9,.25,1.2); }
 .toggle input:checked { background: var(--gold); }
 .toggle input:checked::after { transform: translateX(19px); background: #22170A; }
-textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--parch); font: 12px/1.4 var(--mono); }
-.toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; max-width: calc(100% - 32px); padding: 11px 16px; border-radius: 12px; font-weight: 500; font-size: 14px;
+textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--parch); font: 16px/1.4 var(--mono); }
+.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; max-width: calc(100% - 32px); padding: 11px 16px; border-radius: 12px; font-weight: 500; font-size: 14px;
   color: #22170A; background: var(--gold); box-shadow: 0 12px 30px -10px rgba(0,0,0,.7); animation: toastIn .3s cubic-bezier(.2,.9,.25,1.2); }
 @keyframes toastIn { from { transform: translate(-50%, 20px); opacity: 0; } }
 .empty { text-align: center; padding: 30px 16px; border-radius: 18px; border: 1px dashed var(--line); color: var(--muted); display: grid; gap: 10px; justify-items: center; }
@@ -324,6 +325,8 @@ textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; bo
 @media (max-width: 370px) { .seat .n { font-size: 10px; } .tile b { font-size: 21px; } .drow { grid-template-columns: 108px minmax(0,1fr) 22px; } .hrec { font-size: 20px; min-width: 72px; } }
 </style>
 
+<div class="app">
+<div class="scroller" id="scroller">
 <div class="wrap" lang="en">
   <header class="top">
     <div class="brand"><span class="mark">195<i>–</i>0</span><small id="sub">World Draft</small></div>
@@ -332,6 +335,7 @@ textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; bo
   <main id="view"></main>
 </div>
 
+</div>
 <nav class="tabs" aria-label="Sections">
   <div class="tabs-in" role="tablist">
     <button class="tab" role="tab" data-tab="play"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>Draft</button>
@@ -341,6 +345,7 @@ textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; bo
     <button class="tab" role="tab" data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2.5"/></svg>History</button>
   </div>
 </nav>
+</div>
 
 <script>
 "use strict";
@@ -1586,6 +1591,7 @@ var ICON = {
   sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
   lock: '<svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
 };
+function scrollTop(smooth) { var sc = document.getElementById("scroller"); if (sc) { try { sc.scrollTo({ top: 0, behavior: smooth && !calm() ? "smooth" : "auto" }); } catch (e) { sc.scrollTop = 0; } } }
 function toast(msg) { var t = h("div", { class: "toast", role: "status", text: msg }); document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2400); }
 function calm() { return save.settings.calm || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
 function buzz(ms) { try { if (save.settings.haptics && navigator.vibrate) navigator.vibrate(ms || 10); } catch (e) {} }
@@ -1760,7 +1766,7 @@ function openCandidate(g, p) {
     h("div", { class: "eyebrow", text: "Appoint to an open seat" }),
     h("div", { class: "seatpick" }, ROLES.map(function (r) {
       var open = roles.indexOf(r) >= 0, st = stars(roleScore(p, r.id));
-      return h("button", { disabled: !open, onclick: function () { closeSheet(); assign(g, p.id, r.id); persist(); buzz([12, 40, 12]); render(); window.scrollTo({ top: 0, behavior: calm() ? "auto" : "smooth" }); } }, [
+      return h("button", { disabled: !open, onclick: function () { closeSheet(); assign(g, p.id, r.id); persist(); buzz([12, 40, 12]); render(); scrollTop(true); } }, [
         h("b", { text: r.name }),
         open && !blind ? h("span", { class: "fit", "aria-label": st + " of 3 fit" }, [h("span", { text: "★".repeat(st) }), h("span", { class: "off", text: "★".repeat(3 - st) })]) : null,
         h("span", { class: "h", text: open ? r.hint : "Seat filled" })
@@ -1781,7 +1787,7 @@ function viewReady(g) {
         var p = BY_ID[pk.id];
         return h("div", { class: "grade" }, [medal(p, "s"), h("span", {}, [h("div", { class: "role", text: roleName(pk.role) }), h("div", { class: "who", text: p.name })]), h("span", { class: "rar " + p.rar, text: RAR_NAME[p.rar] })]);
       })),
-      h("button", { class: "btn red", id: "launch", onclick: function () { finish(g); g.animate = true; buzz([20, 60, 20, 60, 40]); render(); window.scrollTo(0, 0); } }, ["Declare war on the world"]),
+      h("button", { class: "btn red", id: "launch", onclick: function () { finish(g); g.animate = true; buzz([20, 60, 20, 60, 40]); render(); scrollTop(); } }, ["Declare war on the world"]),
       h("button", { class: "link", onclick: function () { var last = g.picks.pop(); g.round--; g.roll = rollRound(rng(g.seed + 1 + g.round * 101), taken(g), {}); g.fresh = true; persist(); render(); } }, ["Undo last pick"])
     ])
   ]);
@@ -1860,7 +1866,7 @@ function viewResult(g) {
     h("div", { class: "row" }, [
       h("button", { class: "btn ghost", onclick: function () { openShare(rec); } }, ["Share card"]),
       g.mode === "daily" ? h("button", { class: "btn", onclick: function () { delete save.active.daily; persist(); render(); } }, ["Done"])
-        : h("button", { class: "btn", onclick: function () { var m = g.mode; delete save.active[m]; save.active[m] = newGame(m); persist(); buzz(); render(); window.scrollTo(0, 0); } }, ["Draft again"])
+        : h("button", { class: "btn", onclick: function () { var m = g.mode; delete save.active[m]; save.active[m] = newGame(m); persist(); buzz(); render(); scrollTop(); } }, ["Draft again"])
     ]),
     g.mode !== "daily" ? h("button", { class: "link", onclick: function () { delete save.active[g.mode]; persist(); render(); } }, ["Back to modes"]) : null
   ]);
@@ -2086,7 +2092,7 @@ function openSheet(kids) {
   ]);
   sheetEl = h("div", { class: "scrim", onclick: function (e) { if (e.target === sheetEl) closeSheet(); } }, [sheet]);
   if (replacing) sheet.style.animation = "none";
-  document.body.appendChild(sheetEl); document.body.style.overflow = "hidden";
+  document.body.appendChild(sheetEl);
   dragToDismiss(sheet);
   if (!replacing && !inFrame) { try { history.pushState({ sheet: 1 }, "", location.href); sheetPushed = true; } catch (e) {} }
   var x = sheet.querySelector(".sheet-x"); if (x) x.focus({ preventScroll: true });
@@ -2095,7 +2101,6 @@ function closeSheet(fromPop, fromY) {
   if (!sheetEl) return;
   var el = sheetEl, sheet = el.firstChild; sheetEl = null;
   if (sheetPushed && !fromPop) { sheetPushed = false; try { history.back(); } catch (e) {} } else sheetPushed = false;
-  document.body.style.overflow = "";
   if (calm()) { el.remove(); return; }
   // Exit along the entry path: slide back down from wherever the sheet is now.
   var h0 = sheet.offsetHeight, y0 = fromY || 0;
@@ -2174,7 +2179,7 @@ function openSettings() {
 function boot() {
   $view = document.getElementById("view");
   var hash = (location.hash || "").slice(1); if (["play", "daily", "codex", "stats", "history"].indexOf(hash) >= 0) ui.tab = hash;
-  document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { ui.tab = t.dataset.tab; closeSheet(); buzz(4); render(); window.scrollTo(0, 0); }); });
+  document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { ui.tab = t.dataset.tab; closeSheet(); buzz(4); render(); scrollTop(); }); });
   document.getElementById("gear").addEventListener("click", openSettings);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheet(); });
   // Drop in-progress drafts that reference people no longer in the roster.
