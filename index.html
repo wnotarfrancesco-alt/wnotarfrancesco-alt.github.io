@@ -1,0 +1,2058 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-jDB+KnfY5jeo3OxVZ+s6ZQFNsfiEbKwnWdRP3aGV3hA='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0F1D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="195–0">
+<meta name="description" content="Draft five legends from Western history and conquer 195 nations.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>195–0 World Draft</title>
+</head>
+<body>
+<style>
+@font-face { font-family: "Cinzel"; src: url(fonts/cinzel.woff2) format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Outfit"; src: url(fonts/outfit.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url(fonts/jbmono.woff2) format("woff2"); font-weight: 100 800; font-display: swap; }
+</style>
+<style>
+/* Layout: a single-column imperial war council. Dark by design: ink-navy field, gold leaf, imperial crimson.
+   Cabinet ledger on top, reels and trading cards in the middle, fixed tab bar below. */
+:root {
+  --ink: #0A0F1D;
+  --ink-2: #111829;
+  --ink-3: #19223A;
+  --gold: #E3C06F;
+  --gold-deep: #A87E34;
+  --crimson: #D8434B;
+  --parch: #EEE7D7;
+  --muted: #98A1B6;
+  --line: rgba(227, 192, 111, .16);
+  --line-2: rgba(238, 231, 215, .09);
+  --epic: #B38CF7;
+  --rare: #62A8F2;
+  --common: #8E97AA;
+  --good: #5CC98E;
+  --display: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+  --body: "Outfit", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  margin: 0; color: var(--parch); font: 400 16px/1.45 var(--body);
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(216, 67, 75, .16), transparent 60%),
+    radial-gradient(90% 50% at 100% 110%, rgba(227, 192, 111, .08), transparent 60%),
+    var(--ink);
+  background-attachment: fixed;
+  -webkit-text-size-adjust: 100%; overscroll-behavior-y: none;
+  -webkit-user-select: none; user-select: none;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; background: none; border: 0; padding: 0; }
+button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+textarea { -webkit-user-select: text; user-select: text; }
+.wrap { position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding-inline: 16px; padding-block: 0 calc(104px + env(safe-area-inset-bottom, 0px)); }
+
+/* ---------- Header ---------- */
+.top { display: flex; align-items: center; justify-content: space-between; padding-block: 14px 12px; gap: 12px; }
+.brand { display: grid; gap: 2px; }
+.brand .mark { font: 900 30px/1 var(--display); letter-spacing: .04em; background: linear-gradient(180deg, #F8E3A8 0%, var(--gold) 45%, var(--gold-deep) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand .mark i { font-style: normal; color: var(--crimson); -webkit-text-fill-color: var(--crimson); }
+.brand small { font: 500 10.5px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; background: rgba(255,255,255,.03); }
+.icon-btn svg { width: 19px; height: 19px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
+
+/* ---------- Tabs ---------- */
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: linear-gradient(180deg, rgba(10,15,29,.72), rgba(10,15,29,.96)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); }
+.tabs-in { max-width: 540px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
+.tab { padding: 10px 2px 12px; display: grid; justify-items: center; gap: 4px; color: var(--muted); font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; position: relative; }
+.tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+.tab[aria-selected="true"] { color: var(--gold); }
+.tab[aria-selected="true"]::before { content: ""; position: absolute; top: -1px; left: 30%; right: 30%; height: 2px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 12px var(--gold); }
+
+/* ---------- Type & primitives ---------- */
+h1, h2, h3 { font-family: var(--display); margin: 0; font-weight: 700; text-wrap: balance; letter-spacing: .02em; }
+h2 { font-size: 27px; line-height: 1.08; }
+h3 { font-size: 19px; line-height: 1.15; }
+p { margin: 0; }
+.eyebrow { font: 500 10.5px/1.2 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); opacity: .85; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.stack { display: grid; gap: 16px; }
+.stack-s { display: grid; gap: 10px; }
+.panel { position: relative; border-radius: 18px; padding: 18px; background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)); border: 1px solid var(--line); }
+.rule { height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); border: 0; margin: 0; }
+.btn { width: 100%; border-radius: 14px; padding: 16px 18px; font: 700 15px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #22170A;
+  background: linear-gradient(180deg, #F6DE9C, var(--gold) 55%, #C89B4A); box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 10px 30px -12px rgba(227,192,111,.55); transition: transform .14s cubic-bezier(.2,.8,.2,1), filter .14s; }
+.btn:active { transform: scale(.97); filter: brightness(.95); }
+.btn.red { color: #FFF3F1; background: linear-gradient(180deg, #EE6068, var(--crimson) 60%, #AE2F37); box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 10px 30px -12px rgba(216,67,75,.7); }
+.btn.ghost { color: var(--parch); background: rgba(255,255,255,.04); box-shadow: none; border: 1px solid var(--line); }
+.btn:disabled { opacity: .35; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row > * { flex: 1 1 130px; }
+.link { color: var(--muted); text-decoration: underline; text-underline-offset: 4px; padding: 8px 0; font-size: 14px; justify-self: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 5px 10px; font: 500 11px/1 var(--mono); letter-spacing: .06em; border: 1px solid var(--line-2); color: var(--parch); background: rgba(255,255,255,.04); white-space: nowrap; }
+.chip.good { color: var(--good); border-color: rgba(92,201,142,.35); background: rgba(92,201,142,.08); }
+.chip.bad { color: #FF8D93; border-color: rgba(216,67,75,.45); background: rgba(216,67,75,.1); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---------- Mode cards (home) ---------- */
+.hero { padding: 22px 18px; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(227,192,111,.18), transparent 70%); pointer-events: none; }
+.hero h2 { font-size: 31px; }
+.modes { display: grid; gap: 10px; }
+.mode { text-align: left; display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: 14px; align-items: center; padding: 14px; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,.03); transition: transform .14s cubic-bezier(.2,.8,.2,1), border-color .2s; }
+.mode:active { transform: scale(.98); }
+.mode .glyph { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: radial-gradient(circle at 30% 25%, rgba(227,192,111,.35), rgba(227,192,111,.06)); border: 1px solid var(--line); }
+.mode .glyph svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.7; }
+.mode b { font: 700 17px/1.1 var(--display); letter-spacing: .04em; display: block; }
+.mode span.d { font-size: 13px; color: var(--muted); }
+.mode .go { color: var(--gold); font-size: 22px; }
+
+/* ---------- Cabinet ledger ---------- */
+.ledger { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.seat { position: relative; min-width: 0; border-radius: 12px; padding: 8px 6px 9px; display: grid; justify-items: center; gap: 5px; text-align: center; border: 1px dashed rgba(238,231,215,.16); background: rgba(255,255,255,.02); min-height: 96px; }
+.seat.filled { border: 1px solid var(--line); background: linear-gradient(180deg, rgba(227,192,111,.10), rgba(255,255,255,.02)); }
+.seat.fresh { animation: seatIn .6s cubic-bezier(.2,.9,.25,1.2); }
+@keyframes seatIn { 0% { transform: scale(.7); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.seat .r { font: 500 8.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.seat .n { font: 600 11px/1.15 var(--body); overflow-wrap: break-word; hyphens: auto; }
+.seat .v { color: var(--muted); font-size: 11px; }
+.seat .empty-medal { width: 38px; height: 38px; border-radius: 50%; border: 1px dashed rgba(238,231,215,.2); display: grid; place-items: center; color: rgba(238,231,215,.25); font: 700 14px var(--display); }
+
+/* ---------- Medallion portrait ---------- */
+.medal { --rc: var(--common); position: relative; flex: none; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(from 210deg, var(--rc), rgba(255,255,255,.15), var(--rc), rgba(0,0,0,.2), var(--rc)); padding: 2px; }
+.medal .face { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; font: 700 19px/1 var(--display); letter-spacing: .02em; color: var(--parch);
+  background: radial-gradient(circle at 35% 28%, hsl(var(--hue) 45% 38%), hsl(var(--hue) 50% 14%) 75%); box-shadow: inset 0 0 0 2px rgba(0,0,0,.35), inset 0 -8px 14px rgba(0,0,0,.35); text-shadow: 0 1px 0 rgba(0,0,0,.5); }
+.medal .fl { position: absolute; right: -3px; bottom: -3px; font-size: 16px; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,.6)); }
+.medal.s { width: 38px; height: 38px; } .medal.s .face { font-size: 13px; } .medal.s .fl { font-size: 12px; right: -4px; bottom: -4px; }
+.medal.l { width: 96px; height: 96px; padding: 3px; } .medal.l .face { font-size: 34px; } .medal.l .fl { font-size: 24px; }
+.medal.leg { --rc: var(--gold); box-shadow: 0 0 22px -4px rgba(227,192,111,.7); }
+.medal.epic { --rc: var(--epic); } .medal.rare { --rc: var(--rare); }
+
+.rar { font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; border: 1px solid currentColor; }
+.rar.leg { color: var(--gold); } .rar.epic { color: var(--epic); } .rar.rare { color: var(--rare); } .rar.common { color: var(--common); }
+
+/* ---------- Draft: reels ---------- */
+.roundbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pips { display: flex; gap: 5px; }
+.pip { width: 22px; height: 4px; border-radius: 2px; background: rgba(238,231,215,.14); }
+.pip.on { background: var(--gold); } .pip.now { background: var(--crimson); box-shadow: 0 0 10px var(--crimson); }
+.reels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.reel { position: relative; overflow: hidden; border-radius: 16px; padding: 12px 12px 10px; min-width: 0; display: grid; gap: 8px; align-content: start;
+  background: linear-gradient(180deg, #121A2E, #0C1222); border: 1px solid var(--line); box-shadow: inset 0 12px 20px -14px rgba(0,0,0,.8), inset 0 -12px 20px -14px rgba(0,0,0,.8); }
+.reel .win { height: 52px; overflow: hidden; position: relative; }
+.reel .val { font: 700 20px/1.1 var(--display); letter-spacing: .02em; display: flex; align-items: center; gap: 8px; min-height: 52px; overflow-wrap: anywhere; }
+.reel .val .fl { font-size: 26px; }
+.reel.spinning .val { animation: reelBlur .09s linear infinite; }
+@keyframes reelBlur { 0% { transform: translateY(-40%); opacity: .3; filter: blur(2px); } 100% { transform: translateY(40%); opacity: .3; filter: blur(2px); } }
+.reel.landed .val { animation: land .45s cubic-bezier(.2,.9,.25,1.25); }
+@keyframes land { 0% { transform: translateY(-60%); opacity: .2; } 100% { transform: none; opacity: 1; } }
+.respin { justify-self: start; display: inline-flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.respin svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.4; }
+.respin:disabled { opacity: .3; }
+
+/* ---------- Candidate cards ---------- */
+.cands { display: grid; gap: 10px; }
+.card { position: relative; overflow: hidden; text-align: left; width: 100%; display: grid; grid-template-columns: 56px minmax(0,1fr); gap: 14px; align-items: center; padding: 14px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); border: 1px solid var(--line-2); transition: transform .16s cubic-bezier(.2,.8,.2,1), border-color .2s; opacity: 0; animation: deal .5s cubic-bezier(.2,.9,.25,1.1) forwards; }
+.card:active { transform: scale(.975); }
+@keyframes deal { 0% { opacity: 0; transform: translateY(18px) rotateX(35deg); } 100% { opacity: 1; transform: none; } }
+.card.leg { border-color: rgba(227,192,111,.5); }
+.card.leg::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 30%, rgba(255,235,170,.18) 45%, rgba(255,255,255,.28) 50%, rgba(255,235,170,.18) 55%, transparent 70%); background-size: 250% 100%; animation: foil 3.2s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes foil { 0% { background-position: 120% 0; } 60%, 100% { background-position: -120% 0; } }
+.card.epic { border-color: rgba(179,140,247,.4); } .card.rare { border-color: rgba(98,168,242,.3); }
+.card .nm { font: 600 18px/1.15 var(--body); display: block; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+.spark5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 9px; }
+.spark5 i { height: 4px; border-radius: 2px; background: rgba(238,231,215,.1); position: relative; overflow: hidden; }
+.spark5 i b { position: absolute; inset: 0; right: auto; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); border-radius: 2px; }
+.card .blind { font: 500 11px var(--mono); letter-spacing: .1em; color: var(--muted); margin-top: 8px; }
+
+/* ---------- Sheet ---------- */
+.scrim { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; background: rgba(3,5,12,.66); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: fade .2s ease; }
+.sheet { width: 100%; max-width: 540px; max-height: 90%; overflow: auto; border-radius: 26px 26px 0 0; padding: 14px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, #172036, #0E1426 40%); border: 1px solid var(--line); border-bottom: 0; animation: rise .38s cubic-bezier(.2,.9,.25,1); }
+.grab { width: 42px; height: 5px; border-radius: 3px; background: rgba(238,231,215,.2); margin: 0 auto 14px; }
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { transform: translateY(100%); } }
+.bio { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 16px; align-items: center; }
+.statlist { display: grid; gap: 9px; }
+.stat { display: grid; grid-template-columns: 72px minmax(0,1fr) 22px; gap: 10px; align-items: center; font-size: 13.5px; color: var(--muted); }
+.meter { height: 7px; border-radius: 4px; background: rgba(238,231,215,.08); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); transform-origin: left; animation: grow .6s cubic-bezier(.2,.9,.25,1) both; }
+@keyframes grow { from { transform: scaleX(0); } }
+.stat .mono { color: var(--parch); text-align: right; }
+.seatpick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seatpick button { text-align: left; border-radius: 14px; padding: 12px; display: grid; gap: 4px; border: 1px solid var(--line); background: rgba(255,255,255,.03); transition: transform .14s; }
+.seatpick button:active { transform: scale(.97); }
+.seatpick button:disabled { opacity: .28; border-style: dashed; }
+.seatpick button:last-child:nth-child(odd) { grid-column: span 2; }
+.seatpick b { font: 700 14px/1.1 var(--display); letter-spacing: .06em; text-transform: uppercase; }
+.seatpick .fit { font: 500 13px/1 var(--mono); color: var(--gold); letter-spacing: .1em; }
+.seatpick .fit .off { color: rgba(238,231,215,.18); }
+.seatpick span.h { font-size: 12px; color: var(--muted); }
+.warn { font-size: 12.5px; }
+
+/* ---------- Result / war map ---------- */
+.mapbox { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(120% 90% at 50% 40%, #121B31, #080C18); }
+.mapbox canvas { display: block; width: 100%; height: auto; aspect-ratio: 2.35 / 1; max-width: 100%; }
+.mapbox .tap { position: absolute; right: 10px; bottom: 8px; font: 500 10px/1 var(--mono); letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+.recordwrap { display: grid; justify-items: center; text-align: center; gap: 6px; padding-block: 6px 2px; }
+.record { font: 900 clamp(64px, 21vw, 104px)/.95 var(--display); letter-spacing: .01em; font-variant-numeric: tabular-nums; }
+.record .w { background: linear-gradient(180deg, #FBE7B0, var(--gold) 50%, var(--gold-deep)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.record .d { color: var(--crimson); padding-inline: .06em; }
+.record .l { color: rgba(238,231,215,.35); }
+.outcome { font: 700 20px/1.1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--parch); }
+.outcome.big { animation: stamp .55s cubic-bezier(.2,.9,.25,1.3); }
+@keyframes stamp { 0% { transform: scale(2.2); opacity: 0; letter-spacing: .5em; } 100% { transform: none; opacity: 1; } }
+.ticker { display: grid; gap: 8px; }
+.event { display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 10px; align-items: start; font-size: 14px; animation: fade .4s ease; }
+.event .ic { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 700 13px var(--mono); }
+.event .ic.ok { background: rgba(92,201,142,.15); color: var(--good); } .event .ic.no { background: rgba(216,67,75,.15); color: #FF8D93; }
+.event b { font-weight: 600; }
+.grades { display: grid; }
+.grade { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: 12px; align-items: center; padding-block: 10px; border-bottom: 1px solid var(--line-2); }
+.grade:last-child { border-bottom: 0; }
+.letter { font: 900 24px/1 var(--display); text-align: center; }
+.letter.A { color: var(--gold); text-shadow: 0 0 14px rgba(227,192,111,.5); } .letter.B { color: var(--good); } .letter.C { color: var(--parch); } .letter.D, .letter.F { color: var(--crimson); }
+.grade .role { font: 500 9.5px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); opacity: .8; }
+.grade .who { font-weight: 600; }
+.dispatch { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.dispatch li { position: relative; padding-left: 18px; font-size: 15px; line-height: 1.5; }
+.dispatch li::before { content: "✦"; position: absolute; left: 0; top: 0; color: var(--gold); font-size: 11px; line-height: 2; }
+.unlock { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(227,192,111,.4); background: linear-gradient(90deg, rgba(227,192,111,.14), transparent); animation: deal .5s cubic-bezier(.2,.9,.25,1.1) both; }
+
+/* ---------- Medals (achievements) ---------- */
+.medals { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; }
+.ach { display: grid; justify-items: center; text-align: center; gap: 6px; padding: 12px 6px; border-radius: 14px; border: 1px solid var(--line-2); background: rgba(255,255,255,.02); min-width: 0; }
+.ach .coin { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; background: radial-gradient(circle at 35% 30%, #F8E3A8, var(--gold) 45%, var(--gold-deep)); box-shadow: 0 0 18px -6px rgba(227,192,111,.8), inset 0 -3px 6px rgba(0,0,0,.3); color: #3A2708; }
+.ach.locked .coin { background: rgba(238,231,215,.06); box-shadow: none; color: rgba(238,231,215,.25); }
+.ach b { font: 600 11.5px/1.2 var(--body); }
+.ach span { font-size: 10.5px; color: var(--muted); line-height: 1.25; }
+.ach.locked b { color: var(--muted); }
+
+/* ---------- Stats ---------- */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.tile { padding: 12px 10px; border-radius: 14px; border: 1px solid var(--line-2); background: rgba(255,255,255,.025); min-width: 0; }
+.tile b { display: block; font: 700 26px/1 var(--display); font-variant-numeric: tabular-nums; color: var(--parch); }
+.tile.hl b { color: var(--gold); }
+.tile span { display: block; margin-top: 6px; font: 500 9px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.dist { display: grid; gap: 8px; }
+.drow { display: grid; grid-template-columns: 132px minmax(0,1fr) 26px; gap: 10px; align-items: center; font-size: 12.5px; }
+.dbar { height: 10px; background: rgba(238,231,215,.06); border-radius: 5px; overflow: hidden; }
+.dbar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--gold-deep), var(--gold)); }
+.seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.03); }
+.seg button { padding: 8px 12px; border-radius: 9px; font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--gold); color: #22170A; }
+.spark { width: 100%; height: 130px; display: block; }
+.favs { display: grid; gap: 8px; }
+.fav { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: 12px; align-items: center; }
+
+/* ---------- Codex ---------- */
+.progress { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 16px; align-items: center; }
+.ring { width: 76px; height: 76px; }
+.filters { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+.filters::-webkit-scrollbar { display: none; }
+.filters button { flex: none; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-2); font: 500 11px/1 var(--mono); letter-spacing: .06em; color: var(--muted); }
+.filters button[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); background: rgba(227,192,111,.08); }
+.codex { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.cx { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 12px 6px 10px; border-radius: 14px; border: 1px solid var(--line-2); background: rgba(255,255,255,.025); min-width: 0; }
+.cx .nm { font-size: 11.5px; font-weight: 600; line-height: 1.2; overflow-wrap: break-word; hyphens: auto; max-width: 100%; }
+.cx.locked .medal { filter: grayscale(1) brightness(.45); }
+.cx.locked .nm { color: var(--muted); letter-spacing: .2em; }
+
+/* ---------- History ---------- */
+.hist { display: grid; gap: 10px; }
+.hitem { border-radius: 16px; border: 1px solid var(--line-2); background: rgba(255,255,255,.025); overflow: hidden; }
+.hhead { width: 100%; padding: 14px; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 14px; align-items: center; text-align: left; }
+.hrec { font: 700 24px/1 var(--display); font-variant-numeric: tabular-nums; min-width: 88px; }
+.hrec .l { color: rgba(238,231,215,.35); }
+.badge { font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); }
+.badge.daily { color: var(--crimson); border-color: rgba(216,67,75,.5); } .badge.blind { color: var(--epic); border-color: rgba(179,140,247,.5); }
+.hbody { padding: 0 14px 14px; display: grid; gap: 10px; }
+
+/* ---------- Settings, misc ---------- */
+.toggle { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding-block: 13px; border-bottom: 1px solid var(--line-2); }
+.toggle input { width: 48px; height: 29px; appearance: none; -webkit-appearance: none; border-radius: 15px; position: relative; flex: none; background: rgba(238,231,215,.14); transition: background .2s; }
+.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 23px; height: 23px; border-radius: 50%; background: var(--parch); transition: transform .22s cubic-bezier(.2,.9,.25,1.2); }
+.toggle input:checked { background: var(--gold); }
+.toggle input:checked::after { transform: translateX(19px); background: #22170A; }
+textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--parch); font: 12px/1.4 var(--mono); }
+.toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; max-width: calc(100% - 32px); padding: 11px 16px; border-radius: 12px; font-weight: 500; font-size: 14px;
+  color: #22170A; background: var(--gold); box-shadow: 0 12px 30px -10px rgba(0,0,0,.7); animation: toastIn .3s cubic-bezier(.2,.9,.25,1.2); }
+@keyframes toastIn { from { transform: translate(-50%, 20px); opacity: 0; } }
+.empty { text-align: center; padding: 30px 16px; border-radius: 18px; border: 1px dashed var(--line); color: var(--muted); display: grid; gap: 10px; justify-items: center; }
+.shareimg { width: 100%; max-width: 100%; border-radius: 16px; border: 1px solid var(--line); display: block; -webkit-touch-callout: default; -webkit-user-select: auto; user-select: auto; }
+.privacy { font: 500 10.5px/1.5 var(--mono); letter-spacing: .06em; color: var(--muted); text-align: center; display: flex; gap: 6px; justify-content: center; align-items: center; }
+.privacy svg { width: 12px; height: 12px; stroke: var(--good); fill: none; stroke-width: 2; flex: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition: none !important; } .card { opacity: 1; } }
+@media (max-width: 370px) { .seat .n { font-size: 10px; } .tile b { font-size: 21px; } .drow { grid-template-columns: 108px minmax(0,1fr) 22px; } .hrec { font-size: 20px; min-width: 72px; } }
+</style>
+
+<div class="wrap" lang="en">
+  <header class="top">
+    <div class="brand"><span class="mark">195<i>–</i>0</span><small id="sub">World Draft</small></div>
+    <button class="icon-btn" id="gear" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+  </header>
+  <main id="view"></main>
+</div>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabs-in" role="tablist">
+    <button class="tab" role="tab" data-tab="play"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>Draft</button>
+    <button class="tab" role="tab" data-tab="daily"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><circle cx="12" cy="15" r="2"/></svg>Daily</button>
+    <button class="tab" role="tab" data-tab="codex"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h7M9 11.5h5"/></svg>Codex</button>
+    <button class="tab" role="tab" data-tab="stats"><svg viewBox="0 0 24 24"><path d="M4 21V11M10 21V4M16 21v-7M22 21H2"/></svg>Stats</button>
+    <button class="tab" role="tab" data-tab="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2.5"/></svg>History</button>
+  </div>
+</nav>
+
+<script>
+"use strict";
+/* 195-0 roster: Western figures, historical and modern.
+   Name|Country|Category|Era|Stat overrides (L=Command M=Force F=Fame C=Money S=Brains)
+   Eras: A Ancient, M Medieval, E Early Modern, N Modern (1800-1950), C Contemporary */
+var RAW = `
+George Washington|US|pol|E|L10M8F8
+Thomas Jefferson|US|pol|E|S9
+Benjamin Franklin|US|pol|E|S10F8
+Alexander Hamilton|US|pol|E|S9C8
+Aaron Burr|US|pol|E|M6
+Abraham Lincoln|US|pol|N|L10S9F9
+Theodore Roosevelt|US|pol|N|M7F8
+Franklin D. Roosevelt|US|pol|N|L10F8
+Eleanor Roosevelt|US|pol|N|F8S8
+John F. Kennedy|US|pol|C|F9
+Ronald Reagan|US|pol|C|F9
+Barack Obama|US|pol|C|F9S8
+George S. Patton|US|mil|N|M10F7
+Dwight D. Eisenhower|US|mil|N|L10S8
+Ulysses S. Grant|US|mil|N|L9
+Douglas MacArthur|US|mil|N|F7
+John Paul Jones|US|mil|E|M9
+Meriwether Lewis|US|exp|N|
+William Clark|US|exp|N|
+Neil Armstrong|US|exp|C|F9M6S8
+Amelia Earhart|US|exp|N|F8
+Ralph Waldo Emerson|US|phi|N|
+Henry David Thoreau|US|phi|N|C1
+Thomas Edison|US|sci|N|C8F8
+Nikola Tesla|US|sci|N|S10F8C2
+Orville Wright|US|sci|N|
+Wilbur Wright|US|sci|N|
+Richard Feynman|US|sci|C|
+J. Robert Oppenheimer|US|sci|N|M6L6
+Steve Wozniak|US|sci|C|C7
+Andy Warhol|US|art|C|F8C6
+Georgia O'Keeffe|US|art|N|
+Jackson Pollock|US|art|C|
+Bob Ross|US|art|C|F8
+Mark Twain|US|wri|N|F7
+Ernest Hemingway|US|wri|N|M5
+Edgar Allan Poe|US|wri|N|
+F. Scott Fitzgerald|US|wri|N|
+Stephen King|US|wri|C|F7C7
+Elvis Presley|US|mus|C|F10
+Michael Jackson|US|mus|C|F10
+Taylor Swift|US|mus|C|F10C9S7L6
+Beyoncé|US|mus|C|F10C9L7
+Jay-Z|US|mus|C|C9F9
+Frank Sinatra|US|mus|N|F9
+Louis Armstrong|US|mus|N|F8
+Johnny Cash|US|mus|C|
+Bob Dylan|US|mus|C|S7
+Dolly Parton|US|mus|C|F9C8
+Marilyn Monroe|US|act|C|F10
+Tom Hanks|US|act|C|F9
+Meryl Streep|US|act|C|S7
+Dwayne Johnson|US|act|C|M7F10C8
+Clint Eastwood|US|act|C|M6L7
+John Wayne|US|act|N|M7F9
+Michael Jordan|US|ath|C|F10L8C8
+Muhammad Ali|US|ath|C|F10M9
+Babe Ruth|US|ath|N|F8
+Jesse Owens|US|ath|N|
+Serena Williams|US|ath|C|F9L8
+Tom Brady|US|ath|C|L9
+Mike Tyson|US|ath|C|M10
+Magic Johnson|US|ath|C|
+Larry Bird|US|ath|C|
+John McEnroe|US|ath|C|M6
+Michael Phelps|US|ath|C|
+John D. Rockefeller|US|bil|N|C10L8
+Andrew Carnegie|US|bil|N|C10
+Cornelius Vanderbilt|US|bil|N|C10
+J. P. Morgan|US|bil|N|C10
+Henry Ford|US|bil|N|C9
+Warren Buffett|US|bil|C|C10S9
+Bill Gates|US|bil|C|C10S9
+Steve Jobs|US|bil|C|F8S9
+Elon Musk|US|bil|C|F9C10S7
+Howard Hughes|US|bil|N|C9M5
+Oprah Winfrey|US|tv|C|F10C10L8S7
+Johnny Carson|US|tv|C|F8
+Walter Cronkite|US|tv|C|S7L7
+P. T. Barnum|US|tv|N|F8C8
+Fred Rogers|US|tv|C|F8
+John A. Macdonald|CA|pol|N|
+Pierre Trudeau|CA|pol|C|
+Lester B. Pearson|CA|pol|C|S7
+Wilfrid Laurier|CA|pol|N|
+Isaac Brock|CA|mil|E|M8
+Arthur Currie|CA|mil|N|
+Samuel de Champlain|CA|exp|E|
+Alexander Mackenzie|CA|exp|E|
+Alexander Graham Bell|CA|sci|N|C7
+Frederick Banting|CA|sci|N|
+Geoffrey Hinton|CA|sci|C|
+Céline Dion|CA|mus|C|F9
+Drake|CA|mus|C|F9C9
+Justin Bieber|CA|mus|C|F9
+Leonard Cohen|CA|mus|C|S7
+Joni Mitchell|CA|mus|C|
+Shania Twain|CA|mus|C|
+Ryan Reynolds|CA|act|C|C8
+Keanu Reeves|CA|act|C|F9M6
+Jim Carrey|CA|act|C|F8
+Michael J. Fox|CA|act|C|
+Wayne Gretzky|CA|ath|C|F9L8
+Sidney Crosby|CA|ath|C|
+Georges St-Pierre|CA|ath|C|M10
+Terry Fox|CA|ath|C|L8
+Margaret Atwood|CA|wri|C|
+Lucy Maud Montgomery|CA|wri|N|
+Alex Trebek|CA|tv|C|S8
+Lorne Michaels|CA|tv|C|
+Kenneth Thomson|CA|bil|C|
+Winston Churchill|GB|pol|N|L10M8F9
+Margaret Thatcher|GB|pol|C|L9
+Benjamin Disraeli|GB|pol|N|S8
+William Gladstone|GB|pol|N|
+Oliver Cromwell|GB|pol|E|M8L9
+Clement Attlee|GB|pol|N|
+Duke of Wellington|GB|mil|N|M10
+Horatio Nelson|GB|mil|E|M10F7
+Bernard Montgomery|GB|mil|N|
+William Wallace|GB|mil|M|M10F8
+Boudica|GB|mil|A|M9F7
+Elizabeth I|GB|roy|E|L10S7
+Queen Elizabeth II|GB|roy|C|L9F10C9
+Henry VIII|GB|roy|E|M6
+Queen Victoria|GB|roy|N|L9
+Richard the Lionheart|GB|roy|M|M10
+William the Conqueror|GB|roy|M|M10L9
+Alfred the Great|GB|roy|M|L9M8
+Mary, Queen of Scots|GB|roy|E|
+James Cook|GB|exp|E|
+Ernest Shackleton|GB|exp|N|L9M7
+Francis Drake|GB|exp|E|M8C7
+Walter Raleigh|GB|exp|E|
+David Livingstone|GB|exp|N|
+John Locke|GB|phi|E|
+Thomas Hobbes|GB|phi|E|
+Adam Smith|GB|phi|E|C8S10
+Bertrand Russell|GB|phi|N|
+Isaac Newton|GB|sci|E|S10
+Charles Darwin|GB|sci|N|S10
+Stephen Hawking|GB|sci|C|F8
+Alan Turing|GB|sci|N|M5
+Ada Lovelace|GB|sci|N|
+Michael Faraday|GB|sci|N|
+James Watt|GB|sci|E|C7
+J. M. W. Turner|GB|art|N|
+Banksy|GB|art|C|F8
+David Hockney|GB|art|C|
+William Shakespeare|GB|wri|E|S10F9
+Charles Dickens|GB|wri|N|
+Jane Austen|GB|wri|N|
+J. R. R. Tolkien|GB|wri|N|
+George Orwell|GB|wri|N|
+Agatha Christie|GB|wri|N|
+J. K. Rowling|GB|wri|C|C10F9
+Lord Byron|GB|wri|N|F8
+Roald Dahl|GB|wri|N|
+John Lennon|GB|mus|C|F10
+Paul McCartney|GB|mus|C|F10C9
+Freddie Mercury|GB|mus|C|F10
+Elton John|GB|mus|C|F9C8
+David Bowie|GB|mus|C|F9
+Mick Jagger|GB|mus|C|F9
+Adele|GB|mus|C|F9
+Charlie Chaplin|GB|act|N|F9
+Audrey Hepburn|GB|act|C|F9
+Sean Connery|GB|act|C|F9M6
+Daniel Craig|GB|act|C|M6
+Judi Dench|GB|act|C|
+Idris Elba|GB|act|C|
+David Beckham|GB|ath|C|F9C8
+Lewis Hamilton|GB|ath|C|F8C8
+Andy Murray|GB|ath|C|
+Bobby Moore|GB|ath|C|L8
+Richard Branson|GB|bil|C|F8
+James Dyson|GB|bil|C|S8
+Nathan Rothschild|GB|bil|N|C10
+David Attenborough|GB|tv|C|S9F9
+Simon Cowell|GB|tv|C|C8
+Gordon Ramsay|GB|tv|C|F9L8
+Jeremy Clarkson|GB|tv|C|
+Michael Collins|IE|pol|N|M8L8
+Daniel O'Connell|IE|pol|N|
+Éamon de Valera|IE|pol|N|
+Mary Robinson|IE|pol|C|
+Grace O'Malley|IE|mil|E|M8
+Brian Boru|IE|roy|M|M9L9
+Saint Brendan|IE|exp|M|
+George Berkeley|IE|phi|E|
+Edmund Burke|IE|phi|E|
+Robert Boyle|IE|sci|E|
+Lord Kelvin|IE|sci|N|
+James Joyce|IE|wri|N|
+Oscar Wilde|IE|wri|N|F8
+W. B. Yeats|IE|wri|N|
+Samuel Beckett|IE|wri|C|
+Bram Stoker|IE|wri|N|
+Jonathan Swift|IE|wri|E|
+C. S. Lewis|IE|wri|N|
+Bono|IE|mus|C|F9L6
+Enya|IE|mus|C|
+Hozier|IE|mus|C|
+Sinéad O'Connor|IE|mus|C|
+Liam Neeson|IE|act|C|M7
+Cillian Murphy|IE|act|C|
+Saoirse Ronan|IE|act|C|
+Pierce Brosnan|IE|act|C|
+Conor McGregor|IE|ath|C|M10F9
+Katie Taylor|IE|ath|C|M8
+Roy Keane|IE|ath|C|
+Arthur Guinness|IE|bil|E|C9
+Michael O'Leary|IE|bil|C|
+Graham Norton|IE|tv|C|
+Terry Wogan|IE|tv|C|
+Charles de Gaulle|FR|pol|N|L10M8
+Cardinal Richelieu|FR|pol|E|S9L9
+Maximilien Robespierre|FR|pol|E|
+Georges Clemenceau|FR|pol|N|
+Jean-Baptiste Colbert|FR|pol|E|C9S8
+Napoleon Bonaparte|FR|mil|N|L10M10F9S9
+Joan of Arc|FR|mil|M|M9F8
+Marquis de Lafayette|FR|mil|E|
+Charles Martel|FR|mil|M|M10L8
+Vercingetorix|FR|mil|A|M9L8
+Michel Ney|FR|mil|N|M9
+Louis XIV|FR|roy|E|L9C10F8
+Marie Antoinette|FR|roy|E|F8C9L3
+Charlemagne|FR|roy|M|M9L10
+Eleanor of Aquitaine|FR|roy|M|L8C9
+Henry IV of France|FR|roy|E|
+Joséphine de Beauharnais|FR|roy|N|F8
+Jacques Cartier|FR|exp|E|
+Jacques Cousteau|FR|exp|C|F8
+René-Robert de La Salle|FR|exp|E|
+René Descartes|FR|phi|E|
+Voltaire|FR|phi|E|F7
+Montesquieu|FR|phi|E|
+Jean-Paul Sartre|FR|phi|C|
+Simone de Beauvoir|FR|phi|C|
+Marie Curie|FR|sci|N|
+Pierre Curie|FR|sci|N|
+Louis Pasteur|FR|sci|N|
+Blaise Pascal|FR|sci|E|
+Antoine Lavoisier|FR|sci|E|
+Gustave Eiffel|FR|sci|N|C7
+Claude Monet|FR|art|N|
+Auguste Rodin|FR|art|N|
+Henri Matisse|FR|art|N|
+Paul Gauguin|FR|art|N|
+Edgar Degas|FR|art|N|
+Victor Hugo|FR|wri|N|
+Alexandre Dumas|FR|wri|N|
+Jules Verne|FR|wri|N|
+Albert Camus|FR|wri|C|
+Molière|FR|wri|E|
+Édith Piaf|FR|mus|N|F9
+Claude Debussy|FR|mus|N|
+Johnny Hallyday|FR|mus|C|F8
+Serge Gainsbourg|FR|mus|C|
+Brigitte Bardot|FR|act|C|F9
+Alain Delon|FR|act|C|F8
+Jean Reno|FR|act|C|M5
+Marion Cotillard|FR|act|C|
+Zinedine Zidane|FR|ath|C|F9
+Kylian Mbappé|FR|ath|C|F9C8
+Thierry Henry|FR|ath|C|
+Victor Wembanyama|FR|ath|C|
+Bernard Arnault|FR|bil|C|C10
+Coco Chanel|FR|bil|N|C9F9
+Louis Vuitton|FR|bil|N|C8
+Otto von Bismarck|DE|pol|N|L10M8S9
+Angela Merkel|DE|pol|C|L9S9
+Konrad Adenauer|DE|pol|N|
+Willy Brandt|DE|pol|C|
+Helmut Kohl|DE|pol|C|
+Arminius|DE|mil|A|M10L8
+Gebhard von Blücher|DE|mil|N|M9
+Carl von Clausewitz|DE|mil|N|S10M8
+Frederick the Great|DE|roy|E|M9L9
+Frederick Barbarossa|DE|roy|M|M9
+Otto the Great|DE|roy|M|
+Alexander von Humboldt|DE|exp|N|S9
+Immanuel Kant|DE|phi|E|
+Friedrich Nietzsche|DE|phi|N|
+G. W. F. Hegel|DE|phi|N|
+Karl Marx|DE|phi|N|F8C1
+Martin Luther|DE|phi|E|L8F9
+Albert Einstein|DE|sci|N|S10F10
+Johannes Gutenberg|DE|sci|M|C6
+Johannes Kepler|DE|sci|E|
+Gottfried Leibniz|DE|sci|E|
+Max Planck|DE|sci|N|
+Carl Friedrich Gauss|DE|sci|N|
+Karl Benz|DE|sci|N|C7
+Albrecht Dürer|DE|art|E|
+Hans Holbein|DE|art|E|
+Johann Wolfgang von Goethe|DE|wri|E|S10
+Friedrich Schiller|DE|wri|E|
+Jacob Grimm|DE|wri|N|
+Thomas Mann|DE|wri|N|
+Hermann Hesse|DE|wri|N|
+Ludwig van Beethoven|DE|mus|N|F9S9
+Johann Sebastian Bach|DE|mus|E|S9
+Richard Wagner|DE|mus|N|
+George Frideric Handel|DE|mus|E|
+Nena|DE|mus|C|
+Till Lindemann|DE|mus|C|M4F7
+Marlene Dietrich|DE|act|N|F8
+Diane Kruger|DE|act|C|
+Daniel Brühl|DE|act|C|
+Michael Schumacher|DE|ath|C|F8
+Franz Beckenbauer|DE|ath|C|L8
+Steffi Graf|DE|ath|C|
+Dirk Nowitzki|DE|ath|C|
+Boris Becker|DE|ath|C|
+Jakob Fugger|DE|bil|E|C10L8
+Gottlieb Daimler|DE|bil|N|
+Adolf Dassler|DE|bil|N|
+Julius Caesar|IT|pol|A|L10M10F9
+Augustus|IT|pol|A|L10C9
+Cicero|IT|pol|A|S9F7
+Brutus|IT|pol|A|M6
+Camillo Cavour|IT|pol|N|S8
+Silvio Berlusconi|IT|pol|C|C9F8
+Scipio Africanus|IT|mil|A|M10
+Giuseppe Garibaldi|IT|mil|N|M9F8
+Mark Antony|IT|mil|A|M8F8
+Spartacus|IT|mil|A|M9F8
+Marcus Aurelius|IT|roy|A|S10L9
+Nero|IT|roy|A|F8L3
+Constantine the Great|IT|roy|A|L9M8
+Hadrian|IT|roy|A|
+Caligula|IT|roy|A|L2
+Lorenzo de' Medici|IT|roy|E|C10
+Marco Polo|IT|exp|M|
+Christopher Columbus|IT|exp|E|L7M6
+Amerigo Vespucci|IT|exp|E|
+John Cabot|IT|exp|E|
+Niccolò Machiavelli|IT|phi|E|S10L6
+Thomas Aquinas|IT|phi|M|
+Lucretius|IT|phi|A|
+Galileo Galilei|IT|sci|E|S10
+Leonardo da Vinci|IT|sci|E|S10F9M5
+Guglielmo Marconi|IT|sci|N|
+Enrico Fermi|IT|sci|N|
+Alessandro Volta|IT|sci|E|
+Michelangelo|IT|art|E|F8S8
+Raphael|IT|art|E|
+Caravaggio|IT|art|E|M5
+Donatello|IT|art|E|
+Sandro Botticelli|IT|art|E|
+Gian Lorenzo Bernini|IT|art|E|
+Dante Alighieri|IT|wri|M|
+Virgil|IT|wri|A|
+Ovid|IT|wri|A|
+Petrarch|IT|wri|M|
+Umberto Eco|IT|wri|C|
+Giuseppe Verdi|IT|mus|N|
+Antonio Vivaldi|IT|mus|E|
+Antonio Salieri|IT|mus|E|
+Luciano Pavarotti|IT|mus|C|F9
+Andrea Bocelli|IT|mus|C|
+Giacomo Puccini|IT|mus|N|
+Sophia Loren|IT|act|C|F9
+Marcello Mastroianni|IT|act|C|
+Monica Bellucci|IT|act|C|
+Roberto Benigni|IT|act|C|
+Valentino Rossi|IT|ath|C|F8
+Paolo Maldini|IT|ath|C|L8
+Francesco Totti|IT|ath|C|
+Jannik Sinner|IT|ath|C|
+Enzo Ferrari|IT|bil|N|C9
+Giorgio Armani|IT|bil|C|C9F8
+Cosimo de' Medici|IT|bil|E|C10L8
+Gianni Agnelli|IT|bil|C|C10F7
+Raffaella Carrà|IT|tv|C|F8
+Mike Bongiorno|IT|tv|C|
+Adolfo Suárez|ES|pol|C|
+Felipe González|ES|pol|C|
+Cardinal Cisneros|ES|pol|E|
+El Cid|ES|mil|M|M10F8
+Hernán Cortés|ES|mil|E|M9
+Francisco Pizarro|ES|mil|E|M9
+Gonzalo de Córdoba|ES|mil|E|M9
+Isabella I of Castile|ES|roy|E|L9C8
+Ferdinand II of Aragon|ES|roy|E|
+Charles V|ES|roy|E|M8L9
+Philip II of Spain|ES|roy|E|C9L8
+Trajan|ES|roy|A|M9L9
+King Felipe VI|ES|roy|C|
+Juan Sebastián Elcano|ES|exp|E|
+Vasco Núñez de Balboa|ES|exp|E|
+Juan Ponce de León|ES|exp|E|
+Seneca|ES|phi|A|
+Maimonides|ES|phi|M|
+Averroes|ES|phi|M|
+José Ortega y Gasset|ES|phi|N|
+Santiago Ramón y Cajal|ES|sci|N|
+Pablo Picasso|ES|art|N|F9
+Salvador Dalí|ES|art|N|F9
+Francisco Goya|ES|art|E|
+Diego Velázquez|ES|art|E|
+Joan Miró|ES|art|N|
+Miguel de Cervantes|ES|wri|E|S10
+Federico García Lorca|ES|wri|N|
+Lope de Vega|ES|wri|E|
+Julio Iglesias|ES|mus|C|F8
+Enrique Iglesias|ES|mus|C|
+Rosalía|ES|mus|C|
+Plácido Domingo|ES|mus|C|
+Antonio Banderas|ES|act|C|F8
+Penélope Cruz|ES|act|C|
+Javier Bardem|ES|act|C|M5
+Rafael Nadal|ES|ath|C|L8M8F9
+Pau Gasol|ES|ath|C|
+Andrés Iniesta|ES|ath|C|
+Sergio Ramos|ES|ath|C|M8
+Fernando Alonso|ES|ath|C|
+Carlos Alcaraz|ES|ath|C|
+Amancio Ortega|ES|bil|C|C10
+Florentino Pérez|ES|bil|C|L8
+José Andrés|ES|tv|C|F7L8
+Marquis of Pombal|PT|pol|E|L9S8
+António Guterres|PT|pol|C|S8L8
+Afonso de Albuquerque|PT|mil|E|M9
+Nuno Álvares Pereira|PT|mil|M|M9
+Viriathus|PT|mil|A|M9
+Afonso I of Portugal|PT|roy|M|M9L9
+John I of Portugal|PT|roy|M|
+Manuel I of Portugal|PT|roy|E|C9
+Vasco da Gama|PT|exp|E|M7L8
+Ferdinand Magellan|PT|exp|E|M7L8
+Bartolomeu Dias|PT|exp|E|
+Pedro Álvares Cabral|PT|exp|E|
+Henry the Navigator|PT|exp|M|S8L8C7
+Egas Moniz|PT|sci|N|
+Luís de Camões|PT|wri|E|
+Fernando Pessoa|PT|wri|N|
+José Saramago|PT|wri|C|
+Paula Rego|PT|art|C|
+Amália Rodrigues|PT|mus|N|F8
+Mariza|PT|mus|C|
+Cristiano Ronaldo|PT|ath|C|F10C9M7L8
+Eusébio|PT|ath|C|F8
+Luís Figo|PT|ath|C|
+José Mourinho|PT|ath|C|L9F8S8M4
+Rosa Mota|PT|ath|C|
+Calouste Gulbenkian|PT|bil|N|C10
+Américo Amorim|PT|bil|C|
+Joaquim de Almeida|PT|act|C|
+Johan de Witt|NL|pol|E|S8
+Mark Rutte|NL|pol|C|
+Michiel de Ruyter|NL|mil|E|M10L9
+Maurice of Nassau|NL|mil|E|M9S9
+William the Silent|NL|roy|E|L9M7
+William III of Orange|NL|roy|E|L9M8
+Queen Wilhelmina|NL|roy|N|L9
+Abel Tasman|NL|exp|E|
+Willem Barentsz|NL|exp|E|
+Baruch Spinoza|NL|phi|E|
+Erasmus|NL|phi|E|S10
+Hugo Grotius|NL|phi|E|S10
+Christiaan Huygens|NL|sci|E|
+Antonie van Leeuwenhoek|NL|sci|E|
+Rembrandt|NL|art|E|F8
+Vincent van Gogh|NL|art|N|F9C1
+Johannes Vermeer|NL|art|E|
+Piet Mondrian|NL|art|N|
+M. C. Escher|NL|art|N|S8
+Hieronymus Bosch|NL|art|M|
+Anne Frank|NL|wri|N|F8
+Tiësto|NL|mus|C|F8C8
+Martin Garrix|NL|mus|C|
+André Rieu|NL|mus|C|
+Johan Cruyff|NL|ath|C|F9L8S8
+Max Verstappen|NL|ath|C|M7
+Marco van Basten|NL|ath|C|
+Virgil van Dijk|NL|ath|C|
+Rutger Hauer|NL|act|C|M6
+Famke Janssen|NL|act|C|
+Freddy Heineken|NL|bil|C|C10F7
+Anton Philips|NL|bil|N|C9
+John de Mol|NL|tv|C|C10
+Paul-Henri Spaak|BE|pol|C|
+Godfrey of Bouillon|BE|mil|M|M9L8
+Ambiorix|BE|mil|A|M9
+Albert I of Belgium|BE|roy|N|M8L8
+King Baudouin|BE|roy|C|
+Adrien de Gerlache|BE|exp|N|
+Georges Lemaître|BE|sci|N|
+Adolphe Sax|BE|sci|N|
+Andreas Vesalius|BE|sci|E|
+Peter Paul Rubens|BE|art|E|
+René Magritte|BE|art|N|
+Jan van Eyck|BE|art|M|
+Pieter Bruegel|BE|art|E|
+Georges Simenon|BE|wri|N|
+Hergé|BE|wri|N|F8
+Jacques Brel|BE|mus|C|F8
+Stromae|BE|mus|C|F8
+Django Reinhardt|BE|mus|N|
+Eddy Merckx|BE|ath|C|M8F8
+Kevin De Bruyne|BE|ath|C|
+Justine Henin|BE|ath|C|
+Kim Clijsters|BE|ath|C|
+Jean-Claude Van Damme|BE|act|C|M9F8
+Henri Dunant|CH|pol|N|L7F7
+William Tell|CH|mil|M|M9F8
+Henri Guisan|CH|mil|N|
+Jean-Jacques Rousseau|CH|phi|E|
+John Calvin|CH|phi|E|
+Leonhard Euler|CH|sci|E|S10
+Carl Jung|CH|sci|N|
+Jacob Bernoulli|CH|sci|E|
+Paracelsus|CH|sci|E|
+Auguste Piccard|CH|exp|N|
+Bertrand Piccard|CH|exp|C|
+Alberto Giacometti|CH|art|N|
+Paul Klee|CH|art|N|
+Le Corbusier|CH|art|N|
+Johanna Spyri|CH|wri|N|
+Friedrich Dürrenmatt|CH|wri|C|
+Roger Federer|CH|ath|C|F9L8C9
+Martina Hingis|CH|ath|C|
+Stan Wawrinka|CH|ath|C|
+Fabian Cancellara|CH|ath|C|
+Henri Nestlé|CH|bil|N|C9
+Louis Chevrolet|CH|bil|N|
+Ernesto Bertarelli|CH|bil|C|
+Ursula Andress|CH|act|C|F8
+Klemens von Metternich|AT|pol|N|S9L9
+Bruno Kreisky|AT|pol|C|
+Prince Eugene of Savoy|AT|mil|E|M10L9
+Archduke Charles|AT|mil|N|M9
+Joseph Radetzky|AT|mil|N|M9
+Maria Theresa|AT|roy|E|L9C8
+Franz Joseph I|AT|roy|N|
+Empress Sisi|AT|roy|N|F9
+Maximilian I|AT|roy|E|
+Ludwig Wittgenstein|AT|phi|N|S10
+Karl Popper|AT|phi|C|
+Sigmund Freud|AT|sci|N|F8
+Gregor Mendel|AT|sci|N|
+Erwin Schrödinger|AT|sci|N|
+Lise Meitner|AT|sci|N|
+Kurt Gödel|AT|sci|N|
+Ferdinand Porsche|AT|sci|N|C8
+Gustav Klimt|AT|art|N|F7
+Egon Schiele|AT|art|N|
+Stefan Zweig|AT|wri|N|
+Wolfgang Amadeus Mozart|AT|mus|E|F10S9
+Joseph Haydn|AT|mus|E|
+Franz Schubert|AT|mus|N|
+Johann Strauss II|AT|mus|N|
+Falco|AT|mus|C|F7
+Arnold Schwarzenegger|AT|act|C|M8L7F9
+Christoph Waltz|AT|act|C|S7
+Hedy Lamarr|AT|act|N|S9F8
+Romy Schneider|AT|act|C|
+Niki Lauda|AT|ath|C|M7
+Hermann Maier|AT|ath|C|M8
+Marcel Hirscher|AT|ath|C|
+David Alaba|AT|ath|C|
+Dietrich Mateschitz|AT|bil|C|C10F7
+Frank Stronach|AT|bil|C|
+Dag Hammarskjöld|SE|pol|C|S9L9
+Olof Palme|SE|pol|C|
+Axel Oxenstierna|SE|pol|E|S9L9
+Gustavus Adolphus|SE|roy|E|M10L10
+Charles XII|SE|roy|E|M10L7
+Queen Christina|SE|roy|E|S8
+Gustav Vasa|SE|roy|E|L9
+Sven Hedin|SE|exp|N|
+Emanuel Swedenborg|SE|phi|E|
+Alfred Nobel|SE|sci|N|C8M5
+Carl Linnaeus|SE|sci|E|
+Anders Celsius|SE|sci|E|
+Carl Larsson|SE|art|N|
+Anders Zorn|SE|art|N|
+Astrid Lindgren|SE|wri|C|
+August Strindberg|SE|wri|N|
+Selma Lagerlöf|SE|wri|N|
+Agnetha Fältskog|SE|mus|C|F8
+Björn Ulvaeus|SE|mus|C|C8
+Avicii|SE|mus|C|F8
+Max Martin|SE|mus|C|C9S7F4
+Robyn|SE|mus|C|
+Jenny Lind|SE|mus|N|F8
+Greta Garbo|SE|act|N|F8
+Ingrid Bergman|SE|act|N|F8
+Alicia Vikander|SE|act|C|
+Dolph Lundgren|SE|act|C|M8S7
+Zlatan Ibrahimović|SE|ath|C|F9L7
+Björn Borg|SE|ath|C|
+Annika Sörenstam|SE|ath|C|
+Mondo Duplantis|SE|ath|C|
+Ingemar Stenmark|SE|ath|C|
+Ingvar Kamprad|SE|bil|C|C10
+Daniel Ek|SE|bil|C|
+Stefan Persson|SE|bil|C|
+Ivar Kreuger|SE|bil|N|C10S7
+Gro Harlem Brundtland|NO|pol|C|S8
+Jens Stoltenberg|NO|pol|C|L8
+Olav Tryggvason|NO|mil|M|M9
+Max Manus|NO|mil|N|M8
+Harald Hardrada|NO|roy|M|M10L8
+Saint Olaf|NO|roy|M|
+Harald Fairhair|NO|roy|M|
+Haakon VII|NO|roy|N|L8
+Roald Amundsen|NO|exp|N|M8L9
+Fridtjof Nansen|NO|exp|N|S8
+Leif Erikson|NO|exp|M|M8
+Erik the Red|NO|exp|M|M9
+Thor Heyerdahl|NO|exp|C|
+Niels Henrik Abel|NO|sci|N|
+Kristian Birkeland|NO|sci|N|
+Edvard Munch|NO|art|N|F8
+Henrik Ibsen|NO|wri|N|
+Knut Hamsun|NO|wri|N|
+Jo Nesbø|NO|wri|C|
+Edvard Grieg|NO|mus|N|
+Morten Harket|NO|mus|C|
+Kygo|NO|mus|C|
+Aurora|NO|mus|C|
+Magnus Carlsen|NO|ath|C|S10M2
+Erling Haaland|NO|ath|C|M8F8
+Marit Bjørgen|NO|ath|C|
+Sonja Henie|NO|ath|N|F8
+Karsten Warholm|NO|ath|C|
+John Fredriksen|NO|bil|C|C10
+Olav Thon|NO|bil|C|
+Liv Ullmann|NO|act|C|
+Mette Frederiksen|DK|pol|C|
+Thorvald Stauning|DK|pol|N|
+Peter Tordenskjold|DK|mil|E|M9
+Ragnar Lothbrok|DK|mil|M|M10F8
+Ivar the Boneless|DK|mil|M|M10
+Cnut the Great|DK|roy|M|M9L9
+Harald Bluetooth|DK|roy|M|
+Christian IV|DK|roy|E|
+Margaret I of Denmark|DK|roy|M|L9
+Queen Margrethe II|DK|roy|C|
+Vitus Bering|DK|exp|E|
+Knud Rasmussen|DK|exp|N|
+Søren Kierkegaard|DK|phi|N|S10
+Niels Bohr|DK|sci|N|
+Tycho Brahe|DK|sci|E|
+Hans Christian Ørsted|DK|sci|N|
+Bertel Thorvaldsen|DK|art|N|
+Hans Christian Andersen|DK|wri|N|F8
+Karen Blixen|DK|wri|N|
+Lars Ulrich|DK|mus|C|
+Victor Borge|DK|mus|C|
+MØ|DK|mus|C|
+Mads Mikkelsen|DK|act|C|F8M6
+Viggo Mortensen|DK|act|C|
+Nikolaj Coster-Waldau|DK|act|C|M7
+Peter Schmeichel|DK|ath|C|L8
+Michael Laudrup|DK|ath|C|
+Caroline Wozniacki|DK|ath|C|
+Viktor Axelsen|DK|ath|C|
+Ole Kirk Christiansen|DK|bil|N|C9
+Kjeld Kirk Kristiansen|DK|bil|C|C10
+A. P. Møller|DK|bil|N|C9
+Pericles|GR|pol|A|L10S8F8
+Solon|GR|pol|A|S9
+Demosthenes|GR|pol|A|F8S8
+Eleftherios Venizelos|GR|pol|N|
+Themistocles|GR|mil|A|M9S9
+Miltiades|GR|mil|A|M9
+Theodoros Kolokotronis|GR|mil|N|M9
+Alexander the Great|GR|roy|A|M10L10F10
+Leonidas I|GR|roy|A|M10L9
+Philip II of Macedon|GR|roy|A|M9L9
+Constantine XI|GR|roy|M|M8
+Pytheas|GR|exp|A|
+Socrates|GR|phi|A|S10F7
+Plato|GR|phi|A|S10
+Aristotle|GR|phi|A|S10L6
+Pythagoras|GR|phi|A|S10
+Diogenes|GR|phi|A|C1F7
+Epicurus|GR|phi|A|
+Heraclitus|GR|phi|A|
+Archimedes|GR|sci|A|S10M5
+Euclid|GR|sci|A|
+Hippocrates|GR|sci|A|
+Hypatia|GR|sci|A|
+Eratosthenes|GR|sci|A|
+Phidias|GR|art|A|
+El Greco|GR|art|E|
+Praxiteles|GR|art|A|
+Homer|GR|wri|A|S9F9
+Sophocles|GR|wri|A|
+Aristophanes|GR|wri|A|
+Herodotus|GR|wri|A|
+Nikos Kazantzakis|GR|wri|N|
+Maria Callas|GR|mus|N|F9
+Vangelis|GR|mus|C|
+Nana Mouskouri|GR|mus|C|F8
+Mikis Theodorakis|GR|mus|C|
+Giannis Antetokounmpo|GR|ath|C|M8F8L7
+Milo of Croton|GR|ath|A|M10F7
+Leonidas of Rhodes|GR|ath|A|M8
+Spyridon Louis|GR|ath|N|
+Stefanos Tsitsipas|GR|ath|C|
+Aristotle Onassis|GR|bil|N|C10F8
+Stavros Niarchos|GR|bil|N|C10
+Melina Mercouri|GR|act|C|
+Józef Piłsudski|PL|pol|N|M8L9
+Lech Wałęsa|PL|pol|C|F8L8
+Pope John Paul II|PL|pol|C|F10L9M1
+Tadeusz Kościuszko|PL|mil|E|M9
+Casimir Pulaski|PL|mil|E|M9
+Witold Pilecki|PL|mil|N|M10
+John III Sobieski|PL|roy|E|M10L9
+Casimir III the Great|PL|roy|M|L9
+Jadwiga of Poland|PL|roy|M|
+Bolesław the Brave|PL|roy|M|M9
+Nicolaus Copernicus|PL|sci|E|S10
+Jan Matejko|PL|art|N|
+Tamara de Lempicka|PL|art|N|
+Adam Mickiewicz|PL|wri|N|
+Joseph Conrad|PL|wri|N|
+Wisława Szymborska|PL|wri|C|
+Stanisław Lem|PL|wri|C|
+Henryk Sienkiewicz|PL|wri|N|
+Frédéric Chopin|PL|mus|N|F8S8
+Ignacy Jan Paderewski|PL|mus|N|L7
+Robert Lewandowski|PL|ath|C|F8
+Iga Świątek|PL|ath|C|
+Irena Szewińska|PL|ath|C|
+Helena Rubinstein|PL|bil|N|C9F7
+Pola Negri|PL|act|N|
+Bob Hawke|AU|pol|C|F8
+John Curtin|AU|pol|N|
+Edmund Barton|AU|pol|N|
+Paul Keating|AU|pol|C|
+John Monash|AU|mil|N|M9L9
+Nancy Wake|AU|mil|N|M9
+Ned Kelly|AU|mil|N|M8F8L5
+Douglas Mawson|AU|exp|N|M7L8
+Charles Kingsford Smith|AU|exp|N|
+Howard Florey|AU|sci|N|
+Fiona Wood|AU|sci|C|
+Sidney Nolan|AU|art|N|
+Banjo Paterson|AU|wri|N|
+Kylie Minogue|AU|mus|C|F9
+Angus Young|AU|mus|C|
+Bon Scott|AU|mus|C|
+Sia|AU|mus|C|
+Nick Cave|AU|mus|C|
+Hugh Jackman|AU|act|C|F9
+Nicole Kidman|AU|act|C|
+Cate Blanchett|AU|act|C|
+Chris Hemsworth|AU|act|C|M7F9
+Heath Ledger|AU|act|C|
+Russell Crowe|AU|act|C|M7
+Margot Robbie|AU|act|C|
+Errol Flynn|AU|act|N|M6F8
+Don Bradman|AU|ath|N|
+Cathy Freeman|AU|ath|C|
+Ian Thorpe|AU|ath|C|
+Shane Warne|AU|ath|C|
+Rod Laver|AU|ath|C|
+Rupert Murdoch|AU|bil|C|C10L8F7
+Gina Rinehart|AU|bil|C|C10
+Kerry Packer|AU|bil|C|C10
+Steve Irwin|AU|tv|C|M6F9
+Hamish Blake|AU|tv|C|
+Jacinda Ardern|NZ|pol|C|F8
+Kate Sheppard|NZ|pol|N|L8
+Richard Seddon|NZ|pol|N|
+Helen Clark|NZ|pol|C|
+Bernard Freyberg|NZ|mil|N|M9
+Charles Upham|NZ|mil|N|M10
+Edmund Hillary|NZ|exp|C|M8F8L8
+Kupe|NZ|exp|M|
+Ernest Rutherford|NZ|sci|N|S10
+Archibald McIndoe|NZ|sci|N|
+Katherine Mansfield|NZ|wri|N|
+Lorde|NZ|mus|C|F8
+Kiri Te Kanawa|NZ|mus|C|
+Keith Urban|NZ|mus|C|
+Taika Waititi|NZ|act|C|S8
+Karl Urban|NZ|act|C|
+Peter Jackson|NZ|act|C|S8C8
+Richie McCaw|NZ|ath|C|L9M8
+Jonah Lomu|NZ|ath|C|M9F8
+Lydia Ko|NZ|ath|C|
+Valerie Adams|NZ|ath|C|
+Graeme Hart|NZ|bil|C|C10
+`;
+
+
+/* ============================== WORLD ============================== */
+var COUNTRIES = {
+  US: "United States", CA: "Canada", GB: "United Kingdom", IE: "Ireland", FR: "France", DE: "Germany",
+  IT: "Italy", ES: "Spain", PT: "Portugal", NL: "Netherlands", BE: "Belgium", CH: "Switzerland",
+  AT: "Austria", SE: "Sweden", NO: "Norway", DK: "Denmark", GR: "Greece", PL: "Poland",
+  AU: "Australia", NZ: "New Zealand"
+};
+var CATS = {
+  pol: { name: "Statesmen",         one: "Statesman",       base: [8, 4, 6, 5, 7] },
+  mil: { name: "Warlords",          one: "Warlord",         base: [8, 10, 5, 3, 7] },
+  roy: { name: "Monarchs",          one: "Monarch",         base: [8, 6, 7, 8, 5] },
+  exp: { name: "Explorers",         one: "Explorer",        base: [7, 7, 6, 4, 7] },
+  phi: { name: "Philosophers",      one: "Philosopher",     base: [4, 1, 5, 2, 10] },
+  sci: { name: "Scientists",        one: "Scientist",       base: [4, 2, 5, 4, 10] },
+  art: { name: "Painters & Sculptors", one: "Artist",       base: [3, 2, 7, 4, 7] },
+  wri: { name: "Writers",           one: "Writer",          base: [3, 2, 6, 4, 9] },
+  mus: { name: "Musicians",         one: "Musician",        base: [4, 2, 9, 6, 5] },
+  act: { name: "Actors",            one: "Actor",           base: [4, 4, 8, 6, 5] },
+  ath: { name: "Athletes",          one: "Athlete",         base: [6, 7, 7, 6, 4] },
+  bil: { name: "Tycoons",           one: "Tycoon",          base: [7, 3, 5, 10, 7] },
+  tv:  { name: "Showmen & Hosts",   one: "Showman",         base: [5, 2, 8, 6, 5] }
+};
+var ERAS = { A: "Ancient", M: "Medieval", E: "Renaissance & Empire", N: "Industrial Age", C: "Modern" };
+var ERA_SHORT = { A: "Ancient", M: "Medieval", E: "Early Modern", N: "19th–20th c.", C: "Modern" };
+var HUES = { pol: 214, mil: 356, roy: 42, exp: 170, phi: 262, sci: 196, art: 318, wri: 28, mus: 290, act: 12, ath: 140, bil: 52, tv: 230 };
+
+// 195 nations with approximate map positions (lat, lon)
+var NATION_DATA = "Afghanistan:33.9:67.7;Albania:41.2:20.2;Algeria:28:1.7;Andorra:42.5:1.5;Angola:-11.2:17.9;Antigua and Barbuda:17.1:-61.8;Argentina:-38.4:-63.6;Armenia:40.1:45;Australia:-25.3:133.8;Austria:47.5:14.6;Azerbaijan:40.1:47.6;Bahamas:25:-77.4;Bahrain:26:50.6;Bangladesh:23.7:90.4;Barbados:13.2:-59.5;Belarus:53.7:27.9;Belgium:50.5:4.5;Belize:17.2:-88.5;Benin:9.3:2.3;Bhutan:27.5:90.4;Bolivia:-16.3:-63.6;Bosnia and Herzegovina:43.9:17.7;Botswana:-22.3:24.7;Brazil:-14.2:-51.9;Brunei:4.5:114.7;Bulgaria:42.7:25.5;Burkina Faso:12.2:-1.6;Burundi:-3.4:29.9;Cabo Verde:16:-24;Cambodia:12.6:105;Cameroon:7.4:12.4;Canada:56.1:-106.3;Central African Republic:6.6:20.9;Chad:15.5:18.7;Chile:-35.7:-71.5;China:35.9:104.2;Colombia:4.6:-74.3;Comoros:-11.9:43.9;Congo:-0.2:15.8;Costa Rica:9.7:-83.8;Côte d'Ivoire:7.5:-5.5;Croatia:45.1:15.2;Cuba:21.5:-77.8;Cyprus:35.1:33.4;Czechia:49.8:15.5;DR Congo:-4:21.8;Denmark:56.3:9.5;Djibouti:11.8:42.6;Dominica:15.4:-61.4;Dominican Republic:18.7:-70.2;Ecuador:-1.8:-78.2;Egypt:26.8:30.8;El Salvador:13.8:-88.9;Equatorial Guinea:1.7:10.3;Eritrea:15.2:39.8;Estonia:58.6:25;Eswatini:-26.5:31.5;Ethiopia:9.1:40.5;Fiji:-17.7:178;Finland:61.9:25.7;France:46.2:2.2;Gabon:-0.8:11.6;Gambia:13.4:-15.3;Georgia:42.3:43.4;Germany:51.2:10.5;Ghana:7.9:-1;Greece:39.1:21.8;Grenada:12.1:-61.7;Guatemala:15.8:-90.2;Guinea:9.9:-9.7;Guinea-Bissau:11.8:-15.2;Guyana:4.9:-58.9;Haiti:19:-72.3;Honduras:15.2:-86.2;Hungary:47.2:19.5;Iceland:64.9:-19;India:20.6:79;Indonesia:-0.8:113.9;Iran:32.4:53.7;Iraq:33.2:43.7;Ireland:53.4:-8.2;Israel:31:34.9;Italy:41.9:12.6;Jamaica:18.1:-77.3;Japan:36.2:138.3;Jordan:30.6:36.2;Kazakhstan:48:66.9;Kenya:-0:37.9;Kiribati:1.4:173;Kuwait:29.3:47.5;Kyrgyzstan:41.2:74.8;Laos:19.9:102.5;Latvia:56.9:24.6;Lebanon:33.9:35.9;Lesotho:-29.6:28.2;Liberia:6.4:-9.4;Libya:26.3:17.2;Liechtenstein:47.2:9.6;Lithuania:55.2:23.9;Luxembourg:49.8:6.1;Madagascar:-18.8:46.9;Malawi:-13.3:34.3;Malaysia:4.2:102;Maldives:3.2:73.2;Mali:17.6:-4;Malta:35.9:14.4;Marshall Islands:7.1:171.2;Mauritania:21:-10.9;Mauritius:-20.3:57.6;Mexico:23.6:-102.6;Micronesia:6.9:158.2;Moldova:47.4:28.4;Monaco:43.7:7.4;Mongolia:46.9:103.8;Montenegro:42.7:19.4;Morocco:31.8:-7.1;Mozambique:-18.7:35.5;Myanmar:21.9:95.9;Namibia:-22.9:18.5;Nauru:-0.5:166.9;Nepal:28.4:84.1;Netherlands:52.1:5.3;New Zealand:-40.9:174.9;Nicaragua:12.9:-85.2;Niger:17.6:8.1;Nigeria:9.1:8.7;North Korea:40.3:127.5;North Macedonia:41.6:21.7;Norway:60.5:8.5;Oman:21.5:55.9;Pakistan:30.4:69.3;Palau:7.5:134.6;Palestine:31.9:35.2;Panama:8.5:-80.8;Papua New Guinea:-6.3:143.9;Paraguay:-23.4:-58.4;Peru:-9.2:-75;Philippines:12.9:121.8;Poland:51.9:19.1;Portugal:39.4:-8.2;Qatar:25.4:51.2;Romania:45.9:25;Russia:61.5:105.3;Rwanda:-1.9:29.9;Saint Kitts and Nevis:17.4:-62.8;Saint Lucia:13.9:-61;Saint Vincent and the Grenadines:13.3:-61.2;Samoa:-13.8:-172.1;San Marino:43.9:12.5;São Tomé and Príncipe:0.2:6.6;Saudi Arabia:23.9:45.1;Senegal:14.5:-14.5;Serbia:44:21;Seychelles:-4.7:55.5;Sierra Leone:8.5:-11.8;Singapore:1.35:103.8;Slovakia:48.7:19.7;Slovenia:46.2:14.9;Solomon Islands:-9.6:160.2;Somalia:5.2:46.2;South Africa:-30.6:22.9;South Korea:35.9:127.8;South Sudan:6.9:31.3;Spain:40.5:-3.7;Sri Lanka:7.9:80.8;Sudan:12.9:30.2;Suriname:3.9:-56;Sweden:60.1:18.6;Switzerland:46.8:8.2;Syria:34.8:39;Tajikistan:38.9:71.3;Tanzania:-6.4:34.9;Thailand:15.9:100.9;Timor-Leste:-8.9:125.7;Togo:8.6:0.8;Tonga:-21.2:-175.2;Trinidad and Tobago:10.7:-61.2;Tunisia:33.9:9.5;Turkey:39:35.2;Turkmenistan:39:59.6;Tuvalu:-7.1:177.6;Uganda:1.4:32.3;Ukraine:48.4:31.2;United Arab Emirates:23.4:53.8;United Kingdom:54:-2;United States:39.8:-98.6;Uruguay:-32.5:-55.8;Uzbekistan:41.4:64.6;Vanuatu:-15.4:166.9;Vatican City:41.9:12.45;Venezuela:6.4:-66.6;Vietnam:14.1:108.3;Yemen:15.6:48.5;Zambia:-13.1:27.8;Zimbabwe:-19:29.2";
+var NATIONS = NATION_DATA.split(";").map(function (s) { var p = s.split(":"); return { n: p[0], lat: +p[1], lon: +p[2] }; });
+var TIER3 = ["United States", "China", "Russia", "India"];
+var TIER2 = ["United Kingdom", "France", "Germany", "Japan", "Brazil", "South Korea", "Israel", "Turkey", "Pakistan", "Iran", "Italy", "Egypt", "Indonesia", "Saudi Arabia", "Australia", "Canada", "Ukraine", "Poland", "Vietnam", "North Korea", "Mexico", "Spain"];
+
+var ROLES = [
+  { id: "P",  name: "President",           short: "President", hint: "Leads the regime. Command and brains." },
+  { id: "VP", name: "Vice President",      short: "VP", hint: "Rewards a well-rounded pick." },
+  { id: "G",  name: "General",             short: "General",   hint: "Runs the war. Force above all." },
+  { id: "PM", name: "Propaganda Minister", short: "Propaganda", hint: "Sells the story. Fame is everything." },
+  { id: "T",  name: "Treasurer",           short: "Treasurer", hint: "Funds the war. Money and brains." }
+];
+var ROLE_FIT = { P: ["pol", "roy", "mil"], VP: ["exp", "phi"], G: ["mil", "ath", "exp"], PM: ["mus", "tv", "act", "art"], T: ["bil", "pol"] };
+var STAT_NAMES = ["Command", "Force", "Fame", "Money", "Brains"];
+var OUTCOMES = [
+  [195, "Total World Domination"], [170, "Near-Total Hegemony"], [130, "Global Superpower"],
+  [90, "Continental Power"], [50, "Regional Nuisance"], [20, "Laughingstock Regime"], [0, "Diplomatic Disaster"]
+];
+
+// Famous pairs: duos help, rivals hurt.
+var DUOS = [
+  ["John Lennon", "Paul McCartney"], ["Pierre Curie", "Marie Curie"], ["Orville Wright", "Wilbur Wright"],
+  ["Meriwether Lewis", "William Clark"], ["Steve Jobs", "Steve Wozniak"], ["Beyoncé", "Jay-Z"],
+  ["Socrates", "Plato"], ["Plato", "Aristotle"], ["Aristotle", "Alexander the Great"], ["Philip II of Macedon", "Alexander the Great"],
+  ["Isabella I of Castile", "Christopher Columbus"], ["Isabella I of Castile", "Ferdinand II of Aragon"], ["Elizabeth I", "Francis Drake"],
+  ["Winston Churchill", "Franklin D. Roosevelt"], ["Napoleon Bonaparte", "Joséphine de Beauharnais"], ["Julius Caesar", "Mark Antony"],
+  ["Agnetha Fältskog", "Björn Ulvaeus"], ["Lorenzo de' Medici", "Michelangelo"], ["Cosimo de' Medici", "Donatello"],
+  ["Angus Young", "Bon Scott"], ["George Washington", "Marquis de Lafayette"], ["Henry the Navigator", "Vasco da Gama"],
+  ["Charles V", "Hernán Cortés"], ["Roald Amundsen", "Fridtjof Nansen"], ["Johan Cruyff", "Marco van Basten"]
+];
+var RIVALS = [
+  ["Napoleon Bonaparte", "Duke of Wellington"], ["Napoleon Bonaparte", "Horatio Nelson"], ["Thomas Edison", "Nikola Tesla"],
+  ["Alexander Hamilton", "Aaron Burr"], ["Wolfgang Amadeus Mozart", "Antonio Salieri"], ["Roger Federer", "Rafael Nadal"],
+  ["Elizabeth I", "Mary, Queen of Scots"], ["Julius Caesar", "Brutus"], ["Magic Johnson", "Larry Bird"],
+  ["Isaac Newton", "Gottfried Leibniz"], ["Vincent van Gogh", "Paul Gauguin"], ["Michelangelo", "Raphael"],
+  ["Björn Borg", "John McEnroe"], ["Julius Caesar", "Vercingetorix"], ["Augustus", "Arminius"], ["Augustus", "Mark Antony"],
+  ["Cicero", "Mark Antony"], ["Richard the Lionheart", "Philip II of Spain"], ["Winston Churchill", "Clement Attlee"],
+  ["Cristiano Ronaldo", "Sergio Ramos"], ["Henry VIII", "Martin Luther"], ["Charles XII", "Frederick the Great"]
+];
+
+/* ============================== ENGINE ============================== */
+function hashStr(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function pick(r, arr) { return arr[Math.floor(r() * arr.length)]; }
+function shuffle(r, arr) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function gauss(r) { var u = 1 - r(), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+function flag(cc) { return String.fromCodePoint.apply(null, cc.split("").map(function (c) { return 0x1F1A5 + c.charCodeAt(0); })); }
+function initials(name) {
+  var w = name.replace(/[,.]/g, " ").split(/\s+/).filter(function (x) { return x && !/^(of|the|de|da|du|van|von|y|der|la|le|II|III|IV|VI|VII|VIII|XI|XII|XIV|I)$/.test(x); });
+  if (!w.length) return name.slice(0, 2);
+  return (w.length === 1 ? w[0].slice(0, 2) : w[0][0] + w[w.length - 1][0]).toUpperCase();
+}
+
+function roleScore(p, role) {
+  var s = p.s, L = s[0], M = s[1], F = s[2], C = s[3], S = s[4], v;
+  if (role === "P") v = .35 * L + .25 * S + .2 * F + .1 * M + .1 * C;
+  else if (role === "VP") v = (L + M + F + C + S) / 5 + 1.3;
+  else if (role === "G") v = .55 * M + .25 * L + .2 * S;
+  else if (role === "PM") v = .6 * F + .2 * S + .2 * L;
+  else v = .6 * C + .3 * S + .1 * L;
+  if (ROLE_FIT[role].indexOf(p.cat) >= 0) v += .8;
+  return Math.round(v * 100) / 100;
+}
+function bestRole(p) { return ROLES.reduce(function (b, r) { var v = roleScore(p, r.id); return v > b.v ? { id: r.id, v: v } : b; }, { id: "P", v: -1 }); }
+
+var PEOPLE = [], BY_ID = {}, BY_NAME = {}, CELLS = {};
+RAW.trim().split("\n").forEach(function (line) {
+  var p = line.split("|"), name = p[0], cc = p[1], cat = p[2], era = p[3], ov = p[4] || "";
+  if (!CATS[cat] || !COUNTRIES[cc]) return;
+  var h = hashStr(name), set = {};
+  ov.replace(/([LMFCS])(\d+)/g, function (_, k, v) { set["LMFCS".indexOf(k)] = +v; });
+  var stats = CATS[cat].base.map(function (b, i) {
+    if (set[i] != null) return set[i];
+    return Math.max(1, Math.min(10, b + ((h >>> (i * 3)) % 3) - 1));
+  });
+  var person = { id: "p" + h.toString(36), name: name, cc: cc, cat: cat, era: era, s: stats };
+  person.best = bestRole(person).v;
+  PEOPLE.push(person); BY_ID[person.id] = person; BY_NAME[name] = person;
+  (CELLS[cat] = CELLS[cat] || {});
+  (CELLS[cat][cc] = CELLS[cat][cc] || []).push(person);
+});
+// Rarity by best-seat power, set by rank so the tiers stay balanced.
+(function () {
+  var sorted = PEOPLE.slice().sort(function (a, b) { return b.best - a.best || a.name.localeCompare(b.name); });
+  sorted.forEach(function (p, i) { var q = i / sorted.length; p.rar = q < .07 ? "leg" : q < .22 ? "epic" : q < .5 ? "rare" : "common"; });
+})();
+var RAR_NAME = { leg: "Legendary", epic: "Epic", rare: "Rare", common: "Common" };
+
+function letter(v) { return v >= 8.6 ? "A" : v >= 7.2 ? "B" : v >= 5.8 ? "C" : v >= 4.4 ? "D" : "F"; }
+function stars(v) { return v >= 8.6 ? 3 : v >= 7.2 ? 2 : v >= 5.8 ? 1 : 0; }
+function outcomeFor(w) { for (var i = 0; i < OUTCOMES.length; i++) if (w >= OUTCOMES[i][0]) return OUTCOMES[i][1]; }
+function catsFor(cc) { return Object.keys(CATS).filter(function (c) { return CELLS[c] && CELLS[c][cc]; }); }
+function countriesFor(cat) { return Object.keys(CELLS[cat] || {}); }
+
+function candidatesFor(r, cat, cc, taken) {
+  var list = ((CELLS[cat] || {})[cc] || []).filter(function (p) { return taken.indexOf(p.id) < 0; });
+  return shuffle(r, list).slice(0, 6).map(function (p) { return p.id; });
+}
+function rollRound(r, taken, keep) {
+  keep = keep || {};
+  for (var tries = 0; tries < 80; tries++) {
+    var cat, cc;
+    if (keep.cc) { cc = keep.cc; cat = pick(r, catsFor(cc).filter(function (c) { return c !== keep.notCat; })); }
+    else { cat = keep.cat || pick(r, Object.keys(CATS)); cc = pick(r, countriesFor(cat).filter(function (c) { return c !== keep.notCc; })); }
+    if (!cat || !cc) continue;
+    var cands = candidatesFor(r, cat, cc, taken);
+    if (cands.length) return { cat: cat, cc: cc, cands: cands };
+  }
+  var any = PEOPLE.filter(function (p) { return taken.indexOf(p.id) < 0; }), p0 = pick(r, any);
+  return { cat: p0.cat, cc: p0.cc, cands: candidatesFor(r, p0.cat, p0.cc, taken) };
+}
+
+// Chemistry between cabinet members.
+function chemistry(ids) {
+  var ps = ids.map(function (id) { return BY_ID[id]; }).filter(Boolean), names = ps.map(function (p) { return p.name; }), out = [];
+  function has(n) { return names.indexOf(n) >= 0; }
+  function short(n) { return n.indexOf(" the ") > 0 ? n.split(" the ")[0] : n.indexOf(" of ") > 0 ? n.split(" of ")[0] : n.split(" ").slice(-1)[0]; }
+  DUOS.forEach(function (d) { if (has(d[0]) && has(d[1])) out.push({ k: "duo", t: "Legendary duo: " + short(d[0]) + " & " + short(d[1]), v: .45, good: true }); });
+  RIVALS.forEach(function (d) { if (has(d[0]) && has(d[1])) out.push({ k: "rival", t: "Bitter rivals: " + short(d[0]) + " vs " + short(d[1]), v: -.6, good: false }); });
+  function tally(key) { var m = {}; ps.forEach(function (p) { m[p[key]] = (m[p[key]] || 0) + 1; }); return m; }
+  var byC = tally("cc"), byE = tally("era"), byK = tally("cat");
+  var topC = Object.keys(byC).sort(function (a, b) { return byC[b] - byC[a]; })[0];
+  if (topC && byC[topC] === 5) out.push({ k: "nation", t: "Nation state: all " + COUNTRIES[topC], v: .8, good: true });
+  else if (topC && byC[topC] >= 3) out.push({ k: "home", t: "Home front: " + byC[topC] + "× " + COUNTRIES[topC], v: .35, good: true });
+  if (ps.length === 5 && Object.keys(byC).length === 5) out.push({ k: "coalition", t: "Grand coalition: 5 nations", v: .25, good: true });
+  var topE = Object.keys(byE).sort(function (a, b) { return byE[b] - byE[a]; })[0];
+  if (topE && byE[topE] === 5) out.push({ k: "era5", t: "Age of legends: all " + ERAS[topE], v: .6, good: true });
+  else if (topE && byE[topE] >= 3) out.push({ k: "era", t: ERAS[topE] + " alliance", v: .25, good: true });
+  if (ps.length === 5 && Object.keys(byE).length === 5) out.push({ k: "time", t: "Time travelers: 5 eras", v: .5, good: true });
+  if ((byK.phi || 0) >= 3) out.push({ k: "phil", t: "Philosopher kings", v: .3, good: true });
+  if ((byK.mus || 0) >= 3) out.push({ k: "band", t: "The band is back together", v: .2, good: true });
+  if ((byK.mil || 0) >= 3) out.push({ k: "junta", t: "Military junta", v: .3, good: true });
+  if ((byK.bil || 0) >= 3) out.push({ k: "oligarchy", t: "Oligarchy", v: .15, good: true });
+  return out;
+}
+
+var EVENTS = [
+  { role: "G", ok: "The winter campaign held. {n} kept the army fed through the snow.", no: "Winter came early. {n}'s army froze outside {x}." },
+  { role: "G", ok: "{n} crossed the Alps with the artillery intact.", no: "{n} got lost in the Alps for a month." },
+  { role: "T", ok: "A market crash hit the world. {n} had already sold everything.", no: "A market crash wiped out the war chest. {n} blamed the weather." },
+  { role: "T", ok: "{n} took a massive loan from {x} and never paid it back.", no: "{n} forgot to pay the army. They noticed." },
+  { role: "PM", ok: "A leaked scandal broke. {n} turned it into a hit anthem.", no: "A scandal broke and {n} made it worse on live TV." },
+  { role: "PM", ok: "{n}'s poster campaign made the regime cool in {x}.", no: "{n}'s slogan was mistranslated in {x}. Riots followed." },
+  { role: "P", ok: "Someone attempted a coup. {n} was already waiting in the room.", no: "A coup attempt cost {n} a week and two provinces." },
+  { role: "P", ok: "{n} held the empire together through a plague year.", no: "Plague swept the capital while {n} hid in a summer palace." },
+  { role: "VP", ok: "{n} signed a secret treaty with {x}. Nobody saw it coming.", no: "{n} was sent to negotiate with {x} and came back with a timeshare." },
+  { role: "VP", ok: "{n} quietly bought off the opposition.", no: "{n} tweeted the battle plans by mistake." }
+];
+function conquestP(rating) { return 1 / (1 + Math.exp(-(rating - 6.85) * 1.3)); }
+function simulate(picks, seed) {
+  var r = rng(seed);
+  var scores = picks.map(function (pk) { return roleScore(BY_ID[pk.id], pk.role); });
+  var mean = scores.reduce(function (a, b) { return a + b; }, 0) / scores.length;
+  var min = Math.min.apply(null, scores);
+  var chem = chemistry(picks.map(function (p) { return p.id; }));
+  var chemV = chem.reduce(function (a, c) { return a + c.v; }, 0);
+  var rating = .7 * mean + .3 * min + chemV;
+  // Campaign events
+  var evs = shuffle(r, EVENTS).slice(0, 3), swing = 0;
+  var events = evs.map(function (e) {
+    var i = picks.map(function (p) { return p.role; }).indexOf(e.role), sc = scores[i];
+    var ok = r() < 1 / (1 + Math.exp(-(sc - 6.6) * 1.2));
+    swing += ok ? .025 : -.03;
+    return { role: e.role, ok: ok, text: (ok ? e.ok : e.no).replace("{n}", BY_ID[picks[i].id].name).replace("{x}", pick(r, NATIONS).n) };
+  });
+  var p = conquestP(rating) + swing;
+  var morale = gauss(r) * .04;
+  var homes = picks.map(function (pk) { return COUNTRIES[BY_ID[pk.id].cc]; });
+  var results = NATIONS.map(function (nat) {
+    var n = nat.n, h = hashStr("nation:" + n) / 4294967296, d;
+    if (TIER3.indexOf(n) >= 0) d = .955 + h * .04;
+    else if (TIER2.indexOf(n) >= 0) d = .80 + h * .14;
+    else d = h * .9;
+    var home = homes.indexOf(n) >= 0;
+    if (home) d -= .35;
+    return { n: n, w: p + morale + gauss(r) * .06 > d, home: home, d: d };
+  });
+  var wins = results.filter(function (x) { return x.w; }).length;
+  var order = results.map(function (x, i) { return i; }).sort(function (a, b) { return (results[a].d + r() * .25) - (results[b].d + r() * .25); });
+  return { wins: wins, rating: rating, scores: scores, chem: chem, events: events, results: results, order: order, outcome: outcomeFor(wins) };
+}
+
+var LINES = {
+  P: { A: ["{n} gave one speech from the balcony and three neighbours surrendered before it ended.", "{n} ran the regime like a Swiss watch. Cabinet meetings lasted eleven minutes."],
+       B: ["{n} kept the government steady, if a little fond of ribbon-cuttings.", "{n} made the hard calls on time, most of the time."],
+       C: ["{n} governed by committee, which meant the committee governed.", "{n} spent the first month choosing a new flag."],
+       D: ["{n} was painted asleep during the invasion briefing.", "{n} signed the declaration of war in the wrong place, twice."],
+       F: ["{n} tried to annex {x} by letter and forgot the stamp.", "{n} abdicated on day four to pursue other interests."] },
+  VP: { A: ["{n} fixed every mess before it reached the history books.", "{n} was the best-prepared person in any room, including the war room."],
+        B: ["{n} filled every gap the President left, and there were several.", "{n} handled the dull treaties that actually mattered."],
+        C: ["{n} attended funerals and coronations with real dedication.", "{n} was mostly used to break ties."],
+        D: ["{n} was sent to calm {x} and started a second war.", "{n} kept asking what the Vice President is for."],
+        F: ["{n} accidentally recognized {x} as a sovereign empire.", "{n} was last seen at a spa in {x}."] },
+  G: { A: ["{n}'s armies reached {x} before the maps were printed.", "{n} won battles just by showing up. Soon the enemy stopped showing up."],
+       B: ["{n} ran a disciplined campaign and took {x} with few losses.", "{n} kept supply lines tidy and morale high."],
+       C: ["{n} won the easy battles and lost the rest.", "{n} took {x} after a long and very expensive siege."],
+       D: ["{n} marched on {x} and ended up in the wrong hemisphere.", "{n} treated the war like a practice session. The enemy did not."],
+       F: ["{n} surrendered to {x}, which had not declared war.", "{n} held the victory parade before the first battle."] },
+  PM: { A: ["{n} made the regime the most famous thing on Earth. {x} asked to join.", "{n} turned every defeat into a victory lap."],
+        B: ["{n} kept the headlines friendly and the anthem catchy.", "{n}'s slogans were stuck in every head from here to {x}."],
+        C: ["{n}'s campaign trended for a day, then got buried by gossip.", "{n} ran a solid press office with a few typos."],
+        D: ["{n} announced victory two weeks before the battle, which was lost.", "{n}'s anthem was banned in {x} for being too long."],
+        F: ["{n} held one press conference and the public revolted.", "{n} published the invasion plans in the morning paper."] },
+  T: { A: ["{n} funded the entire war and ended the year with a surplus.", "{n} bought {x} outright. No shots fired."],
+       B: ["{n} kept the soldiers paid and the lights on.", "{n} found money in places nobody had checked."],
+       C: ["{n} balanced the books, mostly by cutting the army's lunch.", "{n} funded the war on a payment plan."],
+       D: ["{n} spent the war chest on a palace in {x}.", "{n} paid the army in coupons."],
+       F: ["{n} lost the treasury key, then the treasury.", "{n} invested the war chest in a scheme from {x}. It folded."] }
+};
+function buildReport(picks, sim, seed) {
+  var r = rng(seed ^ 0x9e3779b9);
+  var won = sim.results.filter(function (x) { return x.w && !x.home; }).map(function (x) { return x.n; });
+  var lost = sim.results.filter(function (x) { return !x.w; }).map(function (x) { return x.n; });
+  return picks.map(function (pk, i) {
+    var g = letter(sim.scores[i]), pool = (g === "A" || g === "B") ? won : lost;
+    if (!pool.length) pool = NATIONS.map(function (n) { return n.n; });
+    return pick(r, LINES[pk.role][g]).replace("{n}", BY_ID[pk.id].name).replace("{x}", pick(r, pool));
+  });
+}
+
+/* ============================== ACHIEVEMENTS ============================== */
+var ACH = [
+  { id: "first", g: "⚜", n: "Sworn In", d: "Finish your first campaign" },
+  { id: "c130", g: "♛", n: "Superpower", d: "Win 130 or more nations" },
+  { id: "c170", g: "✪", n: "Hegemon", d: "Win 170 or more nations" },
+  { id: "perfect", g: "☀", n: "195–0", d: "Conquer the entire world" },
+  { id: "low", g: "☠", n: "Rock Bottom", d: "Win fewer than 20 nations" },
+  { id: "iron", g: "⚔", n: "Iron Cabinet", d: "Every seat graded A" },
+  { id: "legend5", g: "✦", n: "Hall of Legends", d: "Five Legendary picks in one cabinet" },
+  { id: "duo", g: "∞", n: "Dynamic Duo", d: "Seat a legendary duo together" },
+  { id: "rival", g: "⚡", n: "Sworn Enemies", d: "Seat two rivals together" },
+  { id: "nation", g: "⚑", n: "Nation State", d: "All five from one country" },
+  { id: "ancient", g: "☥", n: "Ancient Order", d: "An all-Ancient cabinet" },
+  { id: "time", g: "⌛", n: "Time Travelers", d: "One pick from every era" },
+  { id: "underdog", g: "♞", n: "Underdog", d: "130+ with an F on the cabinet" },
+  { id: "blind", g: "◉", n: "Blindfolded", d: "150+ in a Blind draft" },
+  { id: "daily3", g: "☼", n: "Regular", d: "3-day daily streak" },
+  { id: "daily7", g: "✺", n: "Devoted", d: "7-day daily streak" },
+  { id: "vet10", g: "Ⅹ", n: "Veteran", d: "Finish 10 campaigns" },
+  { id: "vet50", g: "Ⅼ", n: "Old Guard", d: "Finish 50 campaigns" },
+  { id: "col50", g: "❖", n: "Collector", d: "Draft 50 different people" },
+  { id: "col200", g: "♜", n: "Archivist", d: "Draft 200 different people" }
+];
+function checkAchievements(rec) {
+  var got = [], all = save.games, has = function (id) { return save.ach[id]; };
+  function give(id) { if (!has(id)) { save.ach[id] = Date.now(); got.push(id); } }
+  var ps = rec.picks, grades = ps.map(function (p) { return letter(p.s); });
+  give("first");
+  if (rec.w >= 130) give("c130");
+  if (rec.w >= 170) give("c170");
+  if (rec.w === 195) give("perfect");
+  if (rec.w < 20) give("low");
+  if (grades.every(function (g) { return g === "A"; })) give("iron");
+  if (ps.every(function (p) { var q = BY_NAME[p.n]; return q && q.rar === "leg"; })) give("legend5");
+  (rec.chem || []).forEach(function (c) { if (c.k === "duo") give("duo"); if (c.k === "rival") give("rival"); if (c.k === "nation") give("nation"); if (c.k === "time") give("time"); if (c.k === "era5" && ps[0].e === "A") give("ancient"); });
+  if (rec.w >= 130 && grades.indexOf("F") >= 0) give("underdog");
+  if (rec.mode === "blind" && rec.w >= 150) give("blind");
+  var st = dailyStreak(); if (st.cur >= 3) give("daily3"); if (st.cur >= 7) give("daily7");
+  if (all.length >= 10) give("vet10"); if (all.length >= 50) give("vet50");
+  var uniq = drafted(); if (uniq.count >= 50) give("col50"); if (uniq.count >= 200) give("col200");
+  return got;
+}
+function drafted() {
+  var m = {}; save.games.forEach(function (g) { g.picks.forEach(function (p) { if (BY_NAME[p.n]) m[p.n] = (m[p.n] || 0) + 1; }); });
+  return { map: m, count: Object.keys(m).length };
+}
+
+/* ============================== STORE (this device only) ============================== */
+var LS_KEY = "195-0-save-v1";
+var save = { v: 2, games: [], ach: {}, settings: { unlimited: false, calm: false, haptics: true }, active: {} };
+var storageOK = true;
+function lsRead() { try { var s = localStorage.getItem(LS_KEY); return s ? JSON.parse(s) : null; } catch (e) { storageOK = false; return null; } }
+function persist() { try { localStorage.setItem(LS_KEY, JSON.stringify(save)); storageOK = true; } catch (e) { storageOK = false; } }
+function mergeSaves(a, b) {
+  var byId = {};
+  (a.games || []).concat(b.games || []).forEach(function (g) { if (g && g.id && Array.isArray(g.picks)) byId[g.id] = g; });
+  var games = Object.keys(byId).map(function (k) { return byId[k]; }).sort(function (x, y) { return x.t - y.t; });
+  return { v: 2, games: games.slice(-1500), ach: Object.assign({}, a.ach, b.ach), settings: Object.assign({}, a.settings, b.settings), active: Object.assign({}, a.active, b.active) };
+}
+(function initLocal() { var l = lsRead(); if (l && Array.isArray(l.games)) save = mergeSaves(save, l); save.ach = save.ach || {}; })();
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+
+/* ============================== GAME FLOW ============================== */
+function todayUTC() { return new Date().toISOString().slice(0, 10); }
+function newGame(mode) {
+  var seed = mode === "daily" ? hashStr("195-0 west daily " + todayUTC()) : (Math.random() * 4294967296) >>> 0;
+  var g = { mode: mode, day: todayUTC(), seed: seed, round: 0, picks: [], respins: { cat: 1, cc: 1 }, step: 0, fresh: true };
+  g.roll = rollRound(rng(seed + 1), [], {});
+  return g;
+}
+function taken(g) { return g.picks.map(function (p) { return p.id; }); }
+function openRoles(g) { var used = g.picks.map(function (p) { return p.role; }); return ROLES.filter(function (r) { return used.indexOf(r.id) < 0; }); }
+function assign(g, pid, role) {
+  g.picks.push({ id: pid, role: role }); g.round++; g.lastSeat = role; g.fresh = true;
+  g.roll = g.round < 5 ? rollRound(rng(g.seed + 1 + g.round * 101), taken(g), {}) : null;
+}
+function respin(g, half) {
+  g.step++;
+  var r = rng(g.seed + 7 + g.round * 101 + g.step * 7919);
+  g.roll = half === "cat" ? rollRound(r, taken(g), { cc: g.roll.cc, notCat: g.roll.cat }) : rollRound(r, taken(g), { cat: g.roll.cat, notCc: g.roll.cc });
+  if (!(save.settings.unlimited && g.mode === "classic")) g.respins[half]--;
+  g.fresh = half;
+}
+function finish(g) {
+  var ordered = ROLES.map(function (r) { return g.picks.filter(function (p) { return p.role === r.id; })[0]; });
+  g.picks = ordered;
+  var sim = simulate(ordered, g.seed ^ 0x51ed);
+  var rep = buildReport(ordered, sim, g.seed);
+  var rec = {
+    id: g.mode[0] + g.seed.toString(36) + Date.now().toString(36), t: Date.now(), mode: g.mode, day: g.day, seed: g.seed,
+    w: sim.wins, o: sim.outcome,
+    picks: ordered.map(function (p, i) { var pp = BY_ID[p.id]; return { n: pp.name, cc: pp.cc, cat: pp.cat, e: pp.era, r: p.role, s: sim.scores[i] }; }),
+    chem: sim.chem.map(function (c) { return { k: c.k, t: c.t, good: c.good }; }),
+    ev: sim.events.map(function (e) { return { ok: e.ok, t: e.text }; }),
+    rep: rep
+  };
+  save.games.push(rec);
+  var unlocked = checkAchievements(rec);
+  g.recordId = rec.id; g.done = true; g.unlocked = unlocked;
+  persist();
+  simCache[rec.id] = sim;
+  return rec;
+}
+var simCache = {};
+function simFor(rec) {
+  if (simCache[rec.id]) return simCache[rec.id];
+  var picks = rec.picks.map(function (p) { var q = BY_NAME[p.n]; return q ? { id: q.id, role: p.r } : null; });
+  if (rec.seed != null && picks.every(Boolean)) { var s = simulate(picks, rec.seed ^ 0x51ed); if (s.wins === rec.w) return (simCache[rec.id] = s); }
+  // Older or edited records: paint a plausible map with the saved record.
+  var r = rng(hashStr(rec.id)), order = shuffle(r, NATIONS.map(function (_, i) { return i; }));
+  var won = {}; order.slice(0, rec.w).forEach(function (i) { won[i] = 1; });
+  return (simCache[rec.id] = { wins: rec.w, results: NATIONS.map(function (n, i) { return { n: n.n, w: !!won[i], home: false }; }), order: order });
+}
+
+/* ============================== UI HELPERS ============================== */
+var ui = { tab: "play", statFilter: "all", codexCat: "all", open: {}, anim: null };
+var $view, sheetEl = null;
+function h(tag, attrs, kids) {
+  var el = document.createElement(tag);
+  if (attrs) for (var k in attrs) {
+    var v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "text") el.textContent = v;
+    else if (k === "style") el.setAttribute("style", v);
+    else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  (kids || []).forEach(function (c) { if (c != null && c !== false) el.appendChild(typeof c === "string" || typeof c === "number" ? document.createTextNode(String(c)) : c); });
+  return el;
+}
+function svg(markup, cls) { var t = document.createElement("template"); t.innerHTML = markup.trim(); var s = t.content.firstChild; if (cls) s.setAttribute("class", cls); return s; }
+var ICON = {
+  spin: '<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>',
+  crown: '<svg viewBox="0 0 24 24"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>',
+  eye: '<svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg>',
+  sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  lock: '<svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'
+};
+function toast(msg) { var t = h("div", { class: "toast", role: "status", text: msg }); document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2400); }
+function calm() { return save.settings.calm || (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); }
+function buzz(ms) { try { if (save.settings.haptics && navigator.vibrate) navigator.vibrate(ms || 10); } catch (e) {} }
+function roleIdx(id) { for (var i = 0; i < ROLES.length; i++) if (ROLES[i].id === id) return i; return 0; }
+function roleName(id) { return ROLES[roleIdx(id)].name; }
+function medal(p, size) {
+  var q = typeof p === "string" ? BY_NAME[p] : p;
+  var name = q ? q.name : p, cat = q ? q.cat : "pol", cc = q ? q.cc : null, rar = q ? q.rar : "common";
+  return h("span", { class: "medal " + (size || "") + " " + rar, style: "--hue:" + (HUES[cat] || 220), "aria-hidden": "true" }, [
+    h("span", { class: "face", text: initials(name) }), cc ? h("span", { class: "fl", text: flag(cc) }) : null
+  ]);
+}
+function privacyLine() {
+  return h("p", { class: "privacy" }, [svg(ICON.lock), storageOK ? "Saved only on this device · no accounts · no tracking" : "Private browsing detected · progress won't be kept"]);
+}
+
+function render() {
+  if (!$view) return;
+  if (ui.anim) { ui.anim(); ui.anim = null; }
+  document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.dataset.tab === ui.tab ? "true" : "false"); });
+  document.getElementById("sub").textContent = { play: "World Draft", daily: "Daily · " + todayUTC(), codex: "The Codex", stats: "Service Record", history: "The Archive" }[ui.tab];
+  $view.innerHTML = "";
+  var node = ui.tab === "play" ? viewPlay() : ui.tab === "daily" ? viewDaily() : ui.tab === "codex" ? viewCodex() : ui.tab === "stats" ? viewStats() : viewHistory();
+  $view.appendChild(node);
+}
+
+/* ============================== VIEWS: PLAY ============================== */
+function activeFor(tab) {
+  if (tab === "daily") { var d = save.active.daily; if (d && d.day !== todayUTC() && !d.done) { delete save.active.daily; d = null; } return d; }
+  return save.active.classic || save.active.blind;
+}
+function viewPlay() {
+  var g = activeFor("play");
+  if (g) return g.done ? viewResult(g) : g.round >= 5 ? viewReady(g) : viewDraft(g);
+  var last = save.games.filter(function (x) { return x.mode !== "daily"; }).slice(-1)[0];
+  var dailyDone = save.games.some(function (x) { return x.mode === "daily" && x.day === todayUTC(); });
+  function mode(glyph, title, desc, fn, id) {
+    return h("button", { class: "mode", id: id, onclick: fn }, [h("span", { class: "glyph" }, [svg(glyph)]), h("span", {}, [h("b", { text: title }), h("span", { class: "d", text: desc })]), h("span", { class: "go", text: "›" })]);
+  }
+  return h("div", { class: "stack" }, [
+    h("div", { class: "panel hero stack-s" }, [
+      h("div", { class: "eyebrow", text: PEOPLE.length + " figures · 20 nations · 3,000 years" }),
+      h("h2", { text: "Summon five legends. Conquer 195 nations." }),
+      h("p", { class: "muted", text: "Each round rolls a calling and a homeland. Draft a real figure from history or today, seat them in your cabinet, then march on the world." })
+    ]),
+    h("div", { class: "modes" }, [
+      mode(ICON.crown, "Classic Draft", save.settings.unlimited ? "Stats shown · unlimited respins" : "Stats shown · 1 respin each", function () { start("classic"); }, "startClassic"),
+      mode(ICON.eye, "Blind Draft", "Names only. Trust your history.", function () { start("blind"); }, "startBlind"),
+      mode(ICON.sun, "Daily Draft", dailyDone ? "Done today · see your result" : "Same rounds for everyone today", function () { ui.tab = "daily"; render(); }, "goDaily")
+    ]),
+    last ? h("div", { class: "stack-s" }, [h("div", { class: "eyebrow", text: "Last campaign" }), histItem(last, false)]) : null,
+    privacyLine()
+  ]);
+  function start(m) { delete save.active.classic; delete save.active.blind; save.active[m] = newGame(m); persist(); buzz(); render(); }
+}
+function viewDaily() {
+  var g = activeFor("daily");
+  if (g) return g.done ? viewResult(g) : g.round >= 5 ? viewReady(g) : viewDraft(g);
+  var today = todayUTC(), done = save.games.filter(function (x) { return x.mode === "daily" && x.day === today; })[0], st = dailyStreak();
+  return h("div", { class: "stack" }, [
+    h("div", { class: "panel hero stack-s" }, [
+      h("div", { class: "eyebrow", text: "Daily draft · " + today + " UTC" }),
+      h("h2", { text: done ? "Today's campaign is in the books." : "One shot. Same five rounds as everyone." }),
+      h("p", { class: "muted", text: "Locked rounds, no respins, one attempt per day. A new draft opens at midnight UTC." })
+    ]),
+    h("div", { class: "tiles" }, [tile(st.cur, "Streak", st.cur > 0), tile(st.max, "Best streak"), tile(st.played, "Dailies"), tile(st.best == null ? "–" : st.best, "Best daily")]),
+    done ? histItem(done, true) : h("button", { class: "btn red", id: "startDaily", onclick: function () { save.active.daily = newGame("daily"); persist(); buzz(); render(); } }, ["Begin today's draft"]),
+    done ? h("p", { class: "mono muted", id: "countdown", style: "text-align:center;font-size:12px", text: countdownText() }) : null,
+    privacyLine()
+  ]);
+}
+function countdownText() {
+  var now = new Date(), next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1), s = Math.max(0, Math.floor((next - now) / 1000));
+  return "Next daily in " + Math.floor(s / 3600) + "h " + String(Math.floor(s % 3600 / 60)).padStart(2, "0") + "m";
+}
+
+function ledger(g) {
+  return h("div", { class: "ledger" }, ROLES.map(function (r) {
+    var pk = g.picks.filter(function (p) { return p.role === r.id; })[0], p = pk && BY_ID[pk.id];
+    return h("div", { class: "seat" + (p ? " filled" : "") + (p && g.lastSeat === r.id && g.fresh ? " fresh" : "") }, [
+      h("span", { class: "r", text: r.short }),
+      p ? medal(p, "s") : h("span", { class: "empty-medal", text: "?" }),
+      h("span", { class: p ? "n" : "v", text: p ? p.name : "Vacant" })
+    ]);
+  }));
+}
+function chemChips(ids) {
+  var c = chemistry(ids);
+  if (!c.length) return null;
+  return h("div", { class: "chips" }, c.map(function (x) { return h("span", { class: "chip " + (x.good ? "good" : "bad"), text: (x.good ? "▲ " : "▼ ") + x.t }); }));
+}
+
+function viewDraft(g) {
+  var daily = g.mode === "daily", blind = g.mode === "blind", unlimited = save.settings.unlimited && g.mode === "classic";
+  var roll = g.roll, animate = g.fresh && !calm();
+  function respinBtn(half) {
+    var off = daily || (!unlimited && g.respins[half] <= 0);
+    return h("button", { class: "respin", disabled: off, "aria-label": "Respin " + (half === "cat" ? "calling" : "homeland"), onclick: function () { respin(g, half); persist(); buzz(8); render(); } },
+      [svg(ICON.spin), daily ? "Locked" : unlimited ? "Respin" : "Respin · " + g.respins[half]]);
+  }
+  var catVal = h("span", { class: "val", text: CATS[roll.cat].name });
+  var ccVal = h("span", { class: "val" }, [h("span", { class: "fl", text: flag(roll.cc) }), h("span", { text: COUNTRIES[roll.cc] })]);
+  var reelA = h("div", { class: "reel" }, [h("span", { class: "eyebrow", text: "Calling" }), h("div", { class: "win" }, [catVal]), respinBtn("cat")]);
+  var reelB = h("div", { class: "reel" }, [h("span", { class: "eyebrow", text: "Homeland" }), h("div", { class: "win" }, [ccVal]), respinBtn("cc")]);
+  var cardsWrap = h("div", { class: "cands" });
+  function dealCards() {
+    roll.cands.forEach(function (id, i) {
+      var p = BY_ID[id];
+      cardsWrap.appendChild(h("button", { class: "card " + p.rar, style: "animation-delay:" + (animate ? i * 70 : 0) + "ms", onclick: function () { openCandidate(g, p); } }, [
+        medal(p),
+        h("span", { style: "min-width:0" }, [
+          h("span", { class: "nm", text: p.name }),
+          h("span", { class: "meta" }, [h("span", { class: "rar " + p.rar, text: RAR_NAME[p.rar] }), h("span", { text: ERA_SHORT[p.era] })]),
+          blind ? h("span", { class: "blind", text: "STATS SEALED" }) : h("span", { class: "spark5", "aria-hidden": "true" }, p.s.map(function (v) { return h("i", {}, [h("b", { style: "width:" + v * 10 + "%" })]); }))
+        ])
+      ]));
+    });
+  }
+  // Slot-reel spin before the cards are dealt.
+  if (animate && g.fresh !== false) {
+    var spinA = g.fresh === true || g.fresh === "cat", spinB = g.fresh === true || g.fresh === "cc";
+    var catKeys = Object.keys(CATS), ccKeys = Object.keys(COUNTRIES), t0 = performance.now(), timer;
+    if (spinA) reelA.classList.add("spinning");
+    if (spinB) reelB.classList.add("spinning");
+    timer = setInterval(function () {
+      var el = performance.now() - t0;
+      if (spinA) catVal.textContent = CATS[catKeys[Math.floor(Math.random() * catKeys.length)]].name;
+      if (spinB) { var k = ccKeys[Math.floor(Math.random() * ccKeys.length)]; ccVal.firstChild.textContent = flag(k); ccVal.lastChild.textContent = COUNTRIES[k]; }
+      if (spinA && el > 520) { spinA = false; reelA.classList.remove("spinning"); reelA.classList.add("landed"); catVal.textContent = CATS[roll.cat].name; buzz(6); }
+      if (!spinA && spinB && el > 820) { spinB = false; reelB.classList.remove("spinning"); reelB.classList.add("landed"); ccVal.firstChild.textContent = flag(roll.cc); ccVal.lastChild.textContent = COUNTRIES[roll.cc]; buzz(6); }
+      if (!spinA && !spinB) { clearInterval(timer); dealCards(); }
+    }, 55);
+    ui.anim = function () { clearInterval(timer); };
+  } else dealCards();
+  g.fresh = false;
+  var chem = chemChips(taken(g));
+  return h("div", { class: "stack" }, [
+    ledger(g),
+    chem,
+    h("div", { class: "roundbar" }, [
+      h("span", { class: "eyebrow", text: (daily ? "Daily · " : blind ? "Blind · " : "") + "Round " + (g.round + 1) + " of 5" }),
+      h("div", { class: "pips", "aria-hidden": "true" }, [0, 1, 2, 3, 4].map(function (i) { return h("i", { class: "pip" + (i < g.round ? " on" : i === g.round ? " now" : "") }); }))
+    ]),
+    h("div", { class: "reels" }, [reelA, reelB]),
+    cardsWrap,
+    h("button", { class: "link", onclick: function () {
+      confirmSheet("Abandon this draft?", daily ? "You can restart today's daily. The rounds will be the same." : "Your picks so far will be discarded.", "Abandon", function () { delete save.active[g.mode]; persist(); render(); });
+    } }, ["Abandon draft"])
+  ]);
+}
+
+function openCandidate(g, p) {
+  var roles = openRoles(g), blind = g.mode === "blind";
+  var ids = taken(g).concat([p.id]);
+  var preview = chemistry(ids).filter(function (c) { return c.k === "duo" || c.k === "rival"; });
+  buzz(5);
+  openSheet([
+    h("div", { class: "bio" }, [medal(p, "l"), h("div", { class: "stack-s" }, [
+      h("div", { class: "row", style: "gap:6px;flex-wrap:wrap" }, [h("span", { class: "rar " + p.rar, style: "flex:none", text: RAR_NAME[p.rar] }), h("span", { class: "chip", style: "flex:none", text: ERAS[p.era] })]),
+      h("h2", { text: p.name }),
+      h("p", { class: "muted", style: "font-size:14px", text: CATS[p.cat].one + " · " + flag(p.cc) + " " + COUNTRIES[p.cc] })
+    ])]),
+    blind ? h("p", { class: "muted", text: "Stats are sealed in a Blind draft. Seat them where history says they belong." })
+      : h("div", { class: "statlist" }, p.s.map(function (v, i) { return h("div", { class: "stat" }, [h("span", { text: STAT_NAMES[i] }), h("span", { class: "meter" }, [h("i", { style: "width:" + v * 10 + "%;animation-delay:" + i * 50 + "ms" })]), h("span", { class: "mono", text: v })]); })),
+    preview.length ? h("div", { class: "chips" }, preview.map(function (x) { return h("span", { class: "chip " + (x.good ? "good" : "bad"), text: (x.good ? "▲ " : "▼ ") + x.t }); })) : null,
+    h("hr", { class: "rule" }),
+    h("div", { class: "eyebrow", text: "Appoint to an open seat" }),
+    h("div", { class: "seatpick" }, ROLES.map(function (r) {
+      var open = roles.indexOf(r) >= 0, st = stars(roleScore(p, r.id));
+      return h("button", { disabled: !open, onclick: function () { closeSheet(); assign(g, p.id, r.id); persist(); buzz([12, 40, 12]); render(); window.scrollTo({ top: 0, behavior: calm() ? "auto" : "smooth" }); } }, [
+        h("b", { text: r.name }),
+        open && !blind ? h("span", { class: "fit", "aria-label": st + " of 3 fit" }, [h("span", { text: "★".repeat(st) }), h("span", { class: "off", text: "★".repeat(3 - st) })]) : null,
+        h("span", { class: "h", text: open ? r.hint : "Seat filled" })
+      ]);
+    }))
+  ]);
+}
+
+function viewReady(g) {
+  var chem = chemChips(taken(g));
+  return h("div", { class: "stack" }, [
+    ledger(g),
+    h("div", { class: "panel stack" }, [
+      h("div", { class: "eyebrow", text: "Cabinet assembled" }),
+      h("h2", { text: "Your regime awaits its orders." }),
+      chem || h("p", { class: "muted", style: "font-size:14px", text: "No special chemistry in this cabinet." }),
+      h("div", { class: "grades" }, g.picks.slice().sort(function (a, b) { return roleIdx(a.role) - roleIdx(b.role); }).map(function (pk) {
+        var p = BY_ID[pk.id];
+        return h("div", { class: "grade" }, [medal(p, "s"), h("span", {}, [h("div", { class: "role", text: roleName(pk.role) }), h("div", { class: "who", text: p.name })]), h("span", { class: "rar " + p.rar, text: RAR_NAME[p.rar] })]);
+      })),
+      h("button", { class: "btn red", id: "launch", onclick: function () { finish(g); g.animate = true; buzz([20, 60, 20, 60, 40]); render(); window.scrollTo(0, 0); } }, ["Declare war on the world"]),
+      h("button", { class: "link", onclick: function () { var last = g.picks.pop(); g.round--; g.roll = rollRound(rng(g.seed + 1 + g.round * 101), taken(g), {}); g.fresh = true; persist(); render(); } }, ["Undo last pick"])
+    ])
+  ]);
+}
+
+/* ---------- War map ---------- */
+function project(lat, lon, W, H) { return [(lon + 180) / 360 * W, (78 - lat) / (78 + 50) * H]; }
+function mapCanvas(sim, homes) {
+  var dpr = Math.min(3, window.devicePixelRatio || 1), W = 900, H = Math.round(900 / 2.35);
+  var c = h("canvas", { width: W * dpr, height: H * dpr, role: "img", "aria-label": "World map of the campaign" }), ctx = c.getContext("2d");
+  ctx.scale(dpr, dpr);
+  var pts = NATIONS.map(function (n) { return project(n.lat, n.lon, W, H); });
+  // Base layer: glowing land haze + graticule.
+  var base = document.createElement("canvas"); base.width = W * dpr; base.height = H * dpr;
+  var b = base.getContext("2d"); b.scale(dpr, dpr);
+  b.strokeStyle = "rgba(227,192,111,.06)"; b.lineWidth = 1;
+  for (var lo = -180; lo <= 180; lo += 30) { var x = (lo + 180) / 360 * W; b.beginPath(); b.moveTo(x, 0); b.lineTo(x, H); b.stroke(); }
+  for (var la = -30; la <= 60; la += 30) { var y = project(la, 0, W, H)[1]; b.beginPath(); b.moveTo(0, y); b.lineTo(W, y); b.stroke(); }
+  pts.forEach(function (p) { var g = b.createRadialGradient(p[0], p[1], 0, p[0], p[1], 34); g.addColorStop(0, "rgba(120,140,190,.10)"); g.addColorStop(1, "rgba(120,140,190,0)"); b.fillStyle = g; b.beginPath(); b.arc(p[0], p[1], 34, 0, 7); b.fill(); });
+  var state = NATIONS.map(function () { return 0; }); // 0 unknown, 1 won, 2 held, 3 home
+  var arcs = [];
+  homes.forEach(function (i) { state[i] = 3; });
+  function nearestOwned(i) {
+    var best = -1, bd = 1e9, p = pts[i];
+    for (var j = 0; j < pts.length; j++) if (state[j] === 1 || state[j] === 3) { var dx = pts[j][0] - p[0], dy = pts[j][1] - p[1], d = dx * dx + dy * dy; if (d < bd && j !== i) { bd = d; best = j; } }
+    return best;
+  }
+  function draw(now) {
+    ctx.clearRect(0, 0, W, H); ctx.drawImage(base, 0, 0, W, H);
+    arcs = arcs.filter(function (a) { return now - a.t < 900; });
+    arcs.forEach(function (a) {
+      var k = Math.min(1, (now - a.t) / 450), f = 1 - Math.max(0, (now - a.t - 450) / 450);
+      var p0 = pts[a.from], p1 = pts[a.to], mx = (p0[0] + p1[0]) / 2, my = (p0[1] + p1[1]) / 2 - Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) * .3;
+      ctx.strokeStyle = "rgba(216,67,75," + (.75 * f) + ")"; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(p0[0], p0[1]);
+      var steps = 16; for (var s = 1; s <= steps * k; s++) { var t = s / steps, x = (1 - t) * (1 - t) * p0[0] + 2 * (1 - t) * t * mx + t * t * p1[0], y = (1 - t) * (1 - t) * p0[1] + 2 * (1 - t) * t * my + t * t * p1[1]; ctx.lineTo(x, y); }
+      ctx.stroke();
+    });
+    pts.forEach(function (p, i) {
+      var s = state[i];
+      if (s === 3) { ctx.fillStyle = "#E3C06F"; ctx.shadowColor = "#E3C06F"; ctx.shadowBlur = 14; ctx.beginPath(); ctx.arc(p[0], p[1], 5, 0, 7); ctx.fill(); ctx.shadowBlur = 0; ctx.strokeStyle = "rgba(227,192,111,.5)"; ctx.beginPath(); ctx.arc(p[0], p[1], 9 + 3 * Math.sin(now / 300), 0, 7); ctx.stroke(); }
+      else if (s === 1) { ctx.fillStyle = "#D8434B"; ctx.shadowColor = "#D8434B"; ctx.shadowBlur = 8; ctx.beginPath(); ctx.arc(p[0], p[1], 3.6, 0, 7); ctx.fill(); ctx.shadowBlur = 0; }
+      else if (s === 2) { ctx.strokeStyle = "rgba(238,231,215,.55)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(p[0], p[1], 3.2, 0, 7); ctx.stroke(); }
+      else { ctx.fillStyle = "rgba(238,231,215,.22)"; ctx.beginPath(); ctx.arc(p[0], p[1], 2, 0, 7); ctx.fill(); }
+    });
+  }
+  function reveal(i, now) {
+    var x = sim.results[i];
+    if (state[i] === 3) return;
+    if (x.w) { var f = nearestOwned(i); state[i] = 1; if (f >= 0 && now != null) arcs.push({ from: f, to: i, t: now }); }
+    else state[i] = 2;
+  }
+  return { el: c, draw: draw, reveal: reveal, state: state, finishAll: function () { sim.results.forEach(function (_, i) { reveal(i, null); }); arcs = []; draw(performance.now()); } };
+}
+
+function recordEl(w) { return h("div", { class: "record", "aria-live": "polite" }, [h("span", { class: "w", text: w }), h("span", { class: "d", text: "–" }), h("span", { class: "l", text: 195 - w })]); }
+
+function viewResult(g) {
+  var rec = save.games.filter(function (x) { return x.id === g.recordId; })[0];
+  if (!rec) { delete save.active[g.mode]; persist(); return h("div"); }
+  var sim = simFor(rec), animate = g.animate && !calm();
+  g.animate = false;
+  var homes = []; NATIONS.forEach(function (n, i) { if (sim.results[i] && sim.results[i].home) homes.push(i); });
+  var map = mapCanvas(sim, homes);
+  var recWrap = h("div", { class: "recordwrap" }, [h("div", { class: "eyebrow", text: (g.mode === "daily" ? "Daily " + g.day : g.mode === "blind" ? "Blind draft" : "Classic draft") + " · Final record" }), recordEl(rec.w)]);
+  var outcome = h("div", { class: "outcome", text: rec.o });
+  var ticker = h("div", { class: "ticker" });
+  function addEvent(e) { ticker.appendChild(h("div", { class: "event" }, [h("span", { class: "ic " + (e.ok ? "ok" : "no"), text: e.ok ? "✓" : "✕" }), h("span", { text: e.t })])); }
+  var unlocked = (g.unlocked || []).map(function (id) { return ACH.filter(function (a) { return a.id === id; })[0]; }).filter(Boolean);
+  var after = h("div", { class: "stack" }, [
+    unlocked.length ? h("div", { class: "stack-s" }, [h("div", { class: "eyebrow", text: "Medals earned" })].concat(unlocked.map(function (a, i) {
+      return h("div", { class: "unlock", style: "animation-delay:" + i * 120 + "ms" }, [h("span", { class: "ach", style: "padding:0;border:0;background:none" }, [h("span", { class: "coin", text: a.g })]), h("span", {}, [h("b", { text: a.n }), h("div", { class: "muted", style: "font-size:13px", text: a.d })])]);
+    }))) : null,
+    rec.chem && rec.chem.length ? h("div", { class: "chips" }, rec.chem.map(function (x) { return h("span", { class: "chip " + (x.good ? "good" : "bad"), text: (x.good ? "▲ " : "▼ ") + x.t }); })) : null,
+    h("div", { class: "panel" }, [h("div", { class: "eyebrow", style: "margin-bottom:4px", text: "Cabinet report card" }), gradeList(rec)]),
+    h("div", { class: "panel stack-s" }, [h("div", { class: "eyebrow", text: "Dispatches from the front" }), h("ul", { class: "dispatch" }, rec.rep.map(function (t) { return h("li", { text: t }); }))]),
+    h("div", { class: "row" }, [
+      h("button", { class: "btn ghost", onclick: function () { openShare(rec); } }, ["Share card"]),
+      g.mode === "daily" ? h("button", { class: "btn", onclick: function () { delete save.active.daily; persist(); render(); } }, ["Done"])
+        : h("button", { class: "btn", onclick: function () { var m = g.mode; delete save.active[m]; save.active[m] = newGame(m); persist(); buzz(); render(); window.scrollTo(0, 0); } }, ["Draft again"])
+    ]),
+    g.mode !== "daily" ? h("button", { class: "link", onclick: function () { delete save.active[g.mode]; persist(); render(); } }, ["Back to modes"]) : null
+  ]);
+  var wrap = h("div", { class: "stack" }, [recWrap, h("div", { class: "mapbox" }, [map.el, animate ? h("span", { class: "tap", text: "Tap to skip" }) : null]), outcome, ticker, after]);
+  if (!animate) {
+    map.finishAll(); (rec.ev || []).forEach(addEvent);
+    var loop = function (t) { map.draw(t); raf = requestAnimationFrame(loop); }, raf = requestAnimationFrame(loop);
+    ui.anim = function () { cancelAnimationFrame(raf); };
+    return wrap;
+  }
+  outcome.style.visibility = "hidden"; after.style.display = "none";
+  var start = null, shown = 0, dur = 5200, w = 0, evAt = [.28, .55, .8], evShown = 0, raf2, done = false;
+  var numW = recWrap.querySelector(".w"), numL = recWrap.querySelector(".l");
+  numW.textContent = "0"; numL.textContent = "0";
+  function finishNow() {
+    if (done) return; done = true; cancelAnimationFrame(raf2);
+    map.finishAll(); numW.textContent = rec.w; numL.textContent = 195 - rec.w;
+    while (evShown < (rec.ev || []).length) addEvent(rec.ev[evShown++]);
+    outcome.style.visibility = ""; outcome.classList.add("big"); after.style.display = ""; var tp = wrap.querySelector(".tap"); if (tp) tp.remove(); buzz([30, 40, 60]);
+    var loop = function (t) { map.draw(t); raf2 = requestAnimationFrame(loop); }; raf2 = requestAnimationFrame(loop);
+  }
+  function step(ts) {
+    if (done) return;
+    if (start == null) start = ts;
+    var k = Math.min(1, (ts - start) / dur), eased = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, target = Math.floor(eased * 195);
+    while (shown < target) { var i = sim.order[shown++]; map.reveal(i, ts); if (sim.results[i].w) w++; }
+    numW.textContent = w; numL.textContent = shown - w;
+    while (evShown < evAt.length && k >= evAt[evShown] && rec.ev && rec.ev[evShown]) { addEvent(rec.ev[evShown++]); buzz(8); }
+    map.draw(ts);
+    if (k < 1) raf2 = requestAnimationFrame(step); else finishNow();
+  }
+  map.el.addEventListener("click", finishNow);
+  raf2 = requestAnimationFrame(step);
+  ui.anim = function () { done = true; cancelAnimationFrame(raf2); };
+  return wrap;
+}
+function gradeList(rec) {
+  return h("div", { class: "grades" }, rec.picks.map(function (p) {
+    var L = letter(p.s);
+    return h("div", { class: "grade" }, [h("span", { class: "letter " + L, text: L }), h("span", { style: "min-width:0" }, [h("div", { class: "role", text: roleName(p.r) }), h("div", { class: "who", text: flag(p.cc) + " " + p.n })]), h("span", { class: "mono muted", text: p.s.toFixed(1) })]);
+  }));
+}
+
+/* ---------- Share card (rendered on the phone, never uploaded) ---------- */
+function shareText(rec) {
+  var head = "195–0 " + (rec.mode === "daily" ? "Daily " + rec.day : rec.mode === "blind" ? "Blind Draft" : "World Draft") + ": " + rec.w + "–" + (195 - rec.w) + " · " + rec.o;
+  return head + "\n" + rec.picks.map(function (p) { return letter(p.s) + " · " + roleName(p.r) + ": " + p.n; }).join("\n");
+}
+function drawShareCard(rec) {
+  var W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; var x = c.getContext("2d");
+  var bg = x.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, "#161F36"); bg.addColorStop(1, "#070B16"); x.fillStyle = bg; x.fillRect(0, 0, W, H);
+  var glow = x.createRadialGradient(W / 2, 0, 0, W / 2, 0, 800); glow.addColorStop(0, "rgba(216,67,75,.28)"); glow.addColorStop(1, "rgba(216,67,75,0)"); x.fillStyle = glow; x.fillRect(0, 0, W, H);
+  x.strokeStyle = "rgba(227,192,111,.45)"; x.lineWidth = 3; x.strokeRect(36, 36, W - 72, H - 72); x.strokeStyle = "rgba(227,192,111,.18)"; x.lineWidth = 1; x.strokeRect(50, 50, W - 100, H - 100);
+  var sim = simFor(rec), mw = 880, mh = mw / 2.35, ox = 100, oy = 520;
+  NATIONS.forEach(function (n, i) { var p = project(n.lat, n.lon, mw, mh), r = sim.results[i]; x.beginPath(); x.arc(ox + p[0], oy + p[1], r && r.w ? 4.5 : 2.6, 0, 7); x.fillStyle = r && r.home ? "#E3C06F" : r && r.w ? "#D8434B" : "rgba(238,231,215,.25)"; x.fill(); });
+  x.textAlign = "center";
+  x.fillStyle = "#E3C06F"; x.font = "700 40px Cinzel, serif"; x.fillText("195 – 0", W / 2, 140);
+  x.fillStyle = "#98A1B6"; x.font = "500 24px 'JetBrains Mono', monospace"; x.fillText((rec.mode === "daily" ? "DAILY " + rec.day : rec.mode === "blind" ? "BLIND DRAFT" : "WORLD DRAFT") + "  ·  " + new Date(rec.t).toLocaleDateString(), W / 2, 184);
+  var gg = x.createLinearGradient(0, 230, 0, 400); gg.addColorStop(0, "#FBE7B0"); gg.addColorStop(.5, "#E3C06F"); gg.addColorStop(1, "#A87E34");
+  x.font = "900 190px Cinzel, serif"; var ws = String(rec.w), ls = String(195 - rec.w), dash = "–";
+  var tw = x.measureText(ws).width, td = x.measureText(dash).width, tl = x.measureText(ls).width, sx = W / 2 - (tw + td + tl) / 2;
+  x.textAlign = "left"; x.fillStyle = gg; x.fillText(ws, sx, 390); x.fillStyle = "#D8434B"; x.fillText(dash, sx + tw, 390); x.fillStyle = "rgba(238,231,215,.35)"; x.fillText(ls, sx + tw + td, 390);
+  x.textAlign = "center"; x.fillStyle = "#EEE7D7"; x.font = "700 44px Cinzel, serif"; x.fillText(rec.o.toUpperCase(), W / 2, 470);
+  var y = 960;
+  rec.picks.forEach(function (p) {
+    var L = letter(p.s);
+    x.textAlign = "left"; x.font = "900 46px Cinzel, serif"; x.fillStyle = L === "A" ? "#E3C06F" : L === "B" ? "#5CC98E" : L === "C" ? "#EEE7D7" : "#D8434B"; x.fillText(L, 110, y);
+    x.font = "500 20px 'JetBrains Mono', monospace"; x.fillStyle = "#C9A75C"; x.fillText(roleName(p.r).toUpperCase(), 180, y - 24);
+    x.font = "600 36px Outfit, sans-serif"; x.fillStyle = "#EEE7D7"; x.fillText(p.n, 180, y + 14);
+    y += 74;
+  });
+  return c.toDataURL("image/png");
+}
+function openShare(rec) {
+  var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  fontsReady.then(function () {
+    var url = drawShareCard(rec), text = shareText(rec);
+    openSheet([
+      h("h3", { text: "Share your campaign" }),
+      h("img", { class: "shareimg", src: url, alt: "Result card: " + rec.w + " to " + (195 - rec.w) + ", " + rec.o }),
+      h("p", { class: "muted", style: "font-size:13px;text-align:center", text: "Press and hold the card to save or share it. It's made on your phone and never uploaded." }),
+      h("button", { class: "btn ghost", onclick: function () { copyText(text, "Result copied"); } }, ["Copy as text"])
+    ]);
+  });
+}
+function copyText(text, ok) {
+  function fallback() { var ta = h("textarea", { readonly: true }); ta.value = text; openSheet([h("h3", { text: "Copy" }), h("p", { class: "muted", text: "Select the text and copy it." }), ta]); setTimeout(function () { ta.focus(); ta.select(); }, 60); }
+  try { navigator.clipboard.writeText(text).then(function () { toast(ok); }, fallback); } catch (e) { fallback(); }
+}
+
+/* ============================== VIEWS: CODEX ============================== */
+function viewCodex() {
+  var d = drafted(), total = PEOPLE.length, pct = d.count / total;
+  var cats = ["all"].concat(Object.keys(CATS));
+  var list = PEOPLE.filter(function (p) { return ui.codexCat === "all" || p.cat === ui.codexCat; })
+    .sort(function (a, b) { var da = d.map[a.name] ? 0 : 1, db = d.map[b.name] ? 0 : 1; return da - db || "leg epic rare common".indexOf(a.rar) - "leg epic rare common".indexOf(b.rar) || a.name.localeCompare(b.name); });
+  var R = 32, C = 2 * Math.PI * R;
+  var ring = svg('<svg viewBox="0 0 76 76" class="ring"><circle cx="38" cy="38" r="32" fill="none" stroke="rgba(238,231,215,.08)" stroke-width="6"/><circle cx="38" cy="38" r="32" fill="none" stroke="#E3C06F" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + (C * pct).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 38 38)"/><text x="38" y="43" text-anchor="middle" fill="#EEE7D7" font-family="Cinzel, serif" font-weight="700" font-size="15">' + Math.round(pct * 100) + '%</text></svg>');
+  var cap = 120, shown = list.slice(0, ui.codexLimit || cap);
+  return h("div", { class: "stack" }, [
+    h("div", { class: "panel progress" }, [ring, h("div", { class: "stack-s" }, [h("div", { class: "eyebrow", text: "Figures discovered" }), h("h3", { text: d.count + " of " + total }), h("p", { class: "muted", style: "font-size:13px", text: "Draft someone once to reveal their card here." })])]),
+    h("div", { class: "filters", role: "group", "aria-label": "Calling" }, cats.map(function (k) {
+      return h("button", { "aria-pressed": ui.codexCat === k ? "true" : "false", onclick: function () { ui.codexCat = k; ui.codexLimit = cap; render(); } }, [k === "all" ? "All" : CATS[k].name]);
+    })),
+    h("div", { class: "codex" }, shown.map(function (p) {
+      var seen = d.map[p.name];
+      return h("button", { class: "cx" + (seen ? "" : " locked"), onclick: function () { if (seen) openCodexEntry(p, seen); else toast("Draft " + CATS[p.cat].one.toLowerCase() + "s from " + COUNTRIES[p.cc] + " to reveal"); } }, [
+        medal(seen ? p : { name: "?", cat: p.cat, cc: p.cc, rar: "common" }),
+        h("span", { class: "nm", text: seen ? p.name : "? ? ?" })
+      ]);
+    })),
+    list.length > shown.length ? h("button", { class: "btn ghost", onclick: function () { ui.codexLimit = (ui.codexLimit || cap) + cap; render(); } }, ["Show more"]) : null
+  ]);
+}
+function openCodexEntry(p, times) {
+  var games = save.games.filter(function (g) { return g.picks.some(function (x) { return x.n === p.name; }); });
+  var best = games.reduce(function (b, g) { return !b || g.w > b.w ? g : b; }, null);
+  var seats = {}; games.forEach(function (g) { g.picks.forEach(function (x) { if (x.n === p.name) seats[x.r] = (seats[x.r] || 0) + 1; }); });
+  var fav = Object.keys(seats).sort(function (a, b) { return seats[b] - seats[a]; })[0];
+  openSheet([
+    h("div", { class: "bio" }, [medal(p, "l"), h("div", { class: "stack-s" }, [
+      h("div", { class: "row", style: "gap:6px" }, [h("span", { class: "rar " + p.rar, style: "flex:none", text: RAR_NAME[p.rar] }), h("span", { class: "chip", style: "flex:none", text: ERAS[p.era] })]),
+      h("h2", { text: p.name }), h("p", { class: "muted", style: "font-size:14px", text: CATS[p.cat].one + " · " + flag(p.cc) + " " + COUNTRIES[p.cc] })
+    ])]),
+    h("div", { class: "statlist" }, p.s.map(function (v, i) { return h("div", { class: "stat" }, [h("span", { text: STAT_NAMES[i] }), h("span", { class: "meter" }, [h("i", { style: "width:" + v * 10 + "%" })]), h("span", { class: "mono", text: v })]); })),
+    h("div", { class: "tiles", style: "grid-template-columns:repeat(3,minmax(0,1fr))" }, [tile(times, "Times drafted"), tile(best ? best.w : "–", "Best record", true), tile(fav ? ROLES[roleIdx(fav)].short : "–", "Usual seat")]),
+    h("p", { class: "muted", style: "font-size:13px", text: "Best seat by the numbers: " + roleName(bestRole(p).id) + "." })
+  ]);
+}
+
+/* ============================== VIEWS: STATS ============================== */
+function tile(v, label, hl) { return h("div", { class: "tile" + (hl ? " hl" : "") }, [h("b", { text: String(v) }), h("span", { text: label })]); }
+function dailyStreak() {
+  var days = {}, best = null, played = 0;
+  save.games.forEach(function (g) { if (g.mode === "daily") { if (!days[g.day]) played++; days[g.day] = 1; best = best == null ? g.w : Math.max(best, g.w); } });
+  var list = Object.keys(days).sort(), max = 0, run = 0, prev = null;
+  list.forEach(function (d) { var t = Date.parse(d + "T00:00:00Z"); run = prev != null && t - prev === 864e5 ? run + 1 : 1; max = Math.max(max, run); prev = t; });
+  var cur = 0, t = Date.parse(todayUTC() + "T00:00:00Z");
+  if (!days[todayUTC()]) t -= 864e5;
+  while (days[new Date(t).toISOString().slice(0, 10)]) { cur++; t -= 864e5; }
+  return { cur: cur, max: max, played: played, best: best };
+}
+function viewStats() {
+  var f = ui.statFilter, games = save.games.filter(function (g) { return f === "all" || g.mode === f; });
+  var seg = h("div", { class: "seg", role: "group", "aria-label": "Mode" }, [["all", "All"], ["classic", "Classic"], ["blind", "Blind"], ["daily", "Daily"]].map(function (o) {
+    return h("button", { "aria-pressed": f === o[0] ? "true" : "false", onclick: function () { ui.statFilter = o[0]; render(); } }, [o[1]]);
+  }));
+  var medals = h("div", { class: "panel stack-s" }, [
+    h("div", { class: "eyebrow", text: "Medals · " + Object.keys(save.ach).filter(function (k) { return ACH.some(function (a) { return a.id === k; }); }).length + " of " + ACH.length }),
+    h("div", { class: "medals" }, ACH.map(function (a) { var got = save.ach[a.id]; return h("div", { class: "ach" + (got ? "" : " locked") }, [h("span", { class: "coin", text: got ? a.g : "?" }), h("b", { text: a.n }), h("span", { text: a.d })]); }))
+  ]);
+  if (!games.length) return h("div", { class: "stack" }, [seg, h("div", { class: "empty" }, [h("h3", { text: "No campaigns yet" }), h("p", { text: "Finish a draft and your record, averages and favourite picks show up here." })]), medals, privacyLine()]);
+  var ws = games.map(function (g) { return g.w; }), best = Math.max.apply(null, ws), avg = ws.reduce(function (a, b) { return a + b; }, 0) / ws.length;
+  var perfect = ws.filter(function (w) { return w === 195; }).length;
+  var counts = OUTCOMES.map(function (o) { return games.filter(function (g) { return g.o === o[1]; }).length; }), maxC = Math.max.apply(null, counts) || 1;
+  var tally = {}; games.forEach(function (g) { g.picks.forEach(function (p) { tally[p.n] = (tally[p.n] || 0) + 1; }); });
+  var fav = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a] || a.localeCompare(b); }).slice(0, 5);
+  var bestGame = games.slice().sort(function (a, b) { return b.w - a.w || a.t - b.t; })[0], ds = dailyStreak();
+  return h("div", { class: "stack" }, [
+    seg,
+    h("div", { class: "tiles" }, [tile(games.length, "Campaigns"), tile(best, "Best", true), tile(Math.round(avg), "Average"), tile(perfect, "195–0s")]),
+    f === "all" || f === "daily" ? h("div", { class: "tiles" }, [tile(ds.cur, "Daily streak", ds.cur > 0), tile(ds.max, "Best streak"), tile(ds.played, "Dailies"), tile(ds.best == null ? "–" : ds.best, "Best daily")]) : null,
+    h("div", { class: "panel stack-s" }, [h("div", { class: "eyebrow", text: "Nations conquered · last " + Math.min(30, games.length) }), spark(games.slice(-30))]),
+    medals,
+    h("div", { class: "panel stack-s" }, [h("div", { class: "eyebrow", text: "Outcomes" }), h("div", { class: "dist" }, OUTCOMES.map(function (o, i) {
+      return h("div", { class: "drow" }, [h("span", { text: o[1] }), h("span", { class: "dbar" }, [h("i", { style: "width:" + (counts[i] / maxC * 100) + "%" })]), h("span", { class: "mono", style: "text-align:right", text: counts[i] })]);
+    }))]),
+    h("div", { class: "panel stack-s" }, [h("div", { class: "eyebrow", text: "Most drafted" }), h("div", { class: "favs" }, fav.map(function (n) {
+      return h("div", { class: "fav" }, [medal(n, "s"), h("span", { style: "font-weight:600", text: n }), h("span", { class: "mono muted", text: "×" + tally[n] })]);
+    }))]),
+    h("div", { class: "stack-s" }, [h("div", { class: "eyebrow", text: "Greatest cabinet" }), histItem(bestGame, true)]),
+    privacyLine()
+  ]);
+}
+function spark(games) {
+  var W = 320, H = 130, pad = 26, n = games.length;
+  var x = function (i) { return n === 1 ? (W + pad) / 2 : pad + i * (W - pad - 8) / (n - 1); }, y = function (v) { return 10 + (1 - v / 195) * (H - 28); };
+  var pts = games.map(function (g, i) { return x(i).toFixed(1) + "," + y(g.w).toFixed(1); });
+  var s = '<svg class="spark" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="Score trend"><defs><linearGradient id="sg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#E3C06F" stop-opacity=".35"/><stop offset="1" stop-color="#E3C06F" stop-opacity="0"/></linearGradient></defs>';
+  [0, 100, 195].forEach(function (v) { s += '<line x1="' + pad + '" x2="' + W + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="rgba(238,231,215,.08)"/><text x="0" y="' + (y(v) + 4) + '" font-size="9.5" fill="#98A1B6" font-family="JetBrains Mono, monospace">' + v + '</text>'; });
+  if (n > 1) s += '<polygon points="' + x(0) + ',' + y(0) + ' ' + pts.join(" ") + ' ' + x(n - 1) + ',' + y(0) + '" fill="url(#sg)"/><polyline points="' + pts.join(" ") + '" fill="none" stroke="#E3C06F" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
+  s += '<circle cx="' + x(n - 1) + '" cy="' + y(games[n - 1].w) + '" r="4.5" fill="#D8434B" stroke="#0A0F1D" stroke-width="2"/></svg>';
+  return svg(s);
+}
+
+/* ============================== VIEWS: HISTORY ============================== */
+function fmtDate(t) { try { return new Date(t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }); } catch (e) { return ""; } }
+function histItem(g, openDefault) {
+  var key = g.id, open = ui.open[key] != null ? ui.open[key] : !!openDefault;
+  var body = h("div", { class: "hbody", hidden: !open }, [
+    gradeList(g),
+    g.chem && g.chem.length ? h("div", { class: "chips" }, g.chem.map(function (x) { return h("span", { class: "chip " + (x.good ? "good" : "bad"), text: (x.good ? "▲ " : "▼ ") + x.t }); })) : null,
+    g.rep && g.rep.length ? h("ul", { class: "dispatch" }, g.rep.map(function (t) { return h("li", { style: "font-size:14px", text: t }); })) : null,
+    h("button", { class: "btn ghost", onclick: function () { openShare(g); } }, ["Share card"])
+  ]);
+  var head = h("button", { class: "hhead", "aria-expanded": open ? "true" : "false", onclick: function () { var o = body.hidden; body.hidden = !o; ui.open[key] = o; head.setAttribute("aria-expanded", o ? "true" : "false"); } }, [
+    h("span", { class: "hrec" }, [g.w + "", h("span", { class: "l", text: "–" + (195 - g.w) })]),
+    h("span", { style: "min-width:0" }, [h("div", { style: "font-weight:600", text: g.o }), h("div", { class: "muted", style: "font-size:12.5px", text: fmtDate(g.t) })]),
+    h("span", { class: "badge " + g.mode, text: g.mode })
+  ]);
+  return h("div", { class: "hitem" }, [head, body]);
+}
+function viewHistory() {
+  if (!save.games.length) return h("div", { class: "stack" }, [h("div", { class: "empty" }, [h("h3", { text: "The archive is empty" }), h("p", { text: "Every campaign you finish is filed here with its cabinet, chemistry and dispatches." }), h("button", { class: "btn", style: "max-width:260px", onclick: function () { ui.tab = "play"; render(); } }, ["Start a draft"])]), privacyLine()]);
+  var list = save.games.slice().reverse(), limit = ui.histLimit || 40;
+  return h("div", { class: "stack" }, [
+    h("div", { class: "eyebrow", text: save.games.length + " campaigns filed" }),
+    h("div", { class: "hist" }, list.slice(0, limit).map(function (g) { return histItem(g, false); })),
+    list.length > limit ? h("button", { class: "btn ghost", onclick: function () { ui.histLimit = limit + 40; render(); } }, ["Show more"]) : null,
+    privacyLine()
+  ]);
+}
+
+/* ============================== SHEETS & SETTINGS ============================== */
+function openSheet(kids) {
+  closeSheet();
+  sheetEl = h("div", { class: "scrim", onclick: function (e) { if (e.target === sheetEl) closeSheet(); } }, [h("div", { class: "sheet", role: "dialog", "aria-modal": "true" }, [h("div", { class: "grab" }), h("div", { class: "stack" }, kids)])]);
+  document.body.appendChild(sheetEl); document.body.style.overflow = "hidden";
+}
+function closeSheet() { if (sheetEl) { sheetEl.remove(); sheetEl = null; document.body.style.overflow = ""; } }
+function confirmSheet(title, msg, action, fn) {
+  openSheet([h("h3", { text: title }), h("p", { class: "muted", text: msg }), h("div", { class: "row" }, [h("button", { class: "btn ghost", onclick: closeSheet }, ["Cancel"]), h("button", { class: "btn red", onclick: function () { closeSheet(); fn(); } }, [action])])]);
+}
+function openSettings() {
+  function toggle(id, label, sub, key) {
+    var inp = h("input", { type: "checkbox", id: id, role: "switch", onchange: function () { save.settings[key] = inp.checked; persist(); if (key === "unlimited") render(); } });
+    inp.checked = !!save.settings[key];
+    return h("label", { class: "toggle", for: id }, [h("span", {}, [h("div", { style: "font-weight:600", text: label }), h("div", { class: "muted", style: "font-size:13px", text: sub })]), inp]);
+  }
+  var ta = h("textarea", { id: "backup", placeholder: "Paste a backup here to restore it" });
+  openSheet([
+    h("h3", { text: "Settings" }),
+    h("div", {}, [
+      toggle("setUnl", "Unlimited respins", "Classic drafts only. Blind and Daily stay strict.", "unlimited"),
+      toggle("setCalm", "Skip animations", "Show the final record right away.", "calm"),
+      toggle("setHap", "Haptics", "Small vibrations on picks (Android).", "haptics")
+    ]),
+    h("div", { class: "panel stack-s", style: "padding:14px" }, [
+      h("div", { class: "eyebrow", text: "Privacy" }),
+      h("p", { style: "font-size:13.5px", text: "This game has no server, no account and no analytics. It is blocked from making any network connection. Your history lives only in this app's storage on this phone." })
+    ]),
+    h("div", { class: "eyebrow", text: "Backup" }),
+    h("p", { class: "muted", style: "font-size:13px", text: "Copy a backup to keep it safe or move your record to another phone. Paste it back to restore." }),
+    ta,
+    h("div", { class: "row" }, [
+      h("button", { class: "btn ghost", onclick: function () { var t = JSON.stringify({ v: 2, games: save.games, ach: save.ach, settings: save.settings }); ta.value = t; copyText(t, "Backup copied"); } }, ["Copy backup"]),
+      h("button", { class: "btn ghost", onclick: function () {
+        try { var d = JSON.parse(ta.value); if (!d || !Array.isArray(d.games)) throw 0; var n0 = save.games.length; save = mergeSaves(save, { games: d.games, ach: d.ach || {}, settings: {}, active: {} }); persist(); closeSheet(); render(); toast("Restored " + (save.games.length - n0) + " campaigns"); }
+        catch (e) { toast("That isn't a 195–0 backup. Paste the full text."); }
+      } }, ["Restore"])
+    ]),
+    h("button", { class: "link", style: "color:var(--crimson)", onclick: function () {
+      confirmSheet("Erase everything?", "This deletes " + save.games.length + " campaigns, your medals and streaks. It can't be undone.", "Erase", function () { save.games = []; save.ach = {}; save.active = {}; persist(); render(); toast("History erased"); });
+    } }, ["Erase all history"]),
+    h("p", { class: "mono muted", style: "font-size:11px;text-align:center", text: "195–0 · " + PEOPLE.length + " figures · v2" })
+  ]);
+}
+
+/* ============================== BOOT ============================== */
+function boot() {
+  $view = document.getElementById("view");
+  document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { ui.tab = t.dataset.tab; closeSheet(); buzz(4); render(); window.scrollTo(0, 0); }); });
+  document.getElementById("gear").addEventListener("click", openSettings);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheet(); });
+  // Drop in-progress drafts that reference people no longer in the roster.
+  ["classic", "blind", "daily"].forEach(function (m) { var g = save.active[m]; if (g && (!g.roll && !g.done || (g.picks || []).some(function (p) { return !BY_ID[p.id]; }) || (g.roll && g.roll.cands.some(function (id) { return !BY_ID[id]; })))) delete save.active[m]; });
+  if (save.active.daily && save.active.daily.day !== todayUTC() && !save.active.daily.done) delete save.active.daily;
+  render();
+  setInterval(function () { var c = document.getElementById("countdown"); if (c) c.textContent = countdownText(); }, 30000);
+  if ("serviceWorker" in navigator && location.protocol === "https:" && !/claude|claudeusercontent/.test(location.hostname)) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
+}
+if (typeof document !== "undefined") boot();
+</script>
+</body>
+</html>
