@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-IbAYEfyXjGAINWqdlUv6KG5+83ehKwzSmS2T1nNOnEY='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-eGkWU8vcbeGdA5flXigbxs07hu7aPc6ubr4tVAipV3w='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0F1D">
@@ -47,7 +47,8 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+body { position: fixed; inset: 0; width: 100%; }
 body {
   margin: 0; color: var(--parch); font: 400 16px/1.45 var(--body);
   background:
@@ -68,7 +69,7 @@ textarea { -webkit-user-select: text; user-select: text; }
 /* App shell: the screen is a fixed frame. Only .scroller scrolls, so the tab bar never moves. */
 .app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; height: 100%; padding-top: env(safe-area-inset-top, 0px); }
 .scroller { position: relative; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; overflow-anchor: none; }
-.wrap { position: relative; max-width: 540px; margin: 0 auto; padding-inline: 16px; padding-block: 0 28px; }
+.wrap { position: relative; max-width: 540px; min-height: calc(100% + 1px); margin: 0 auto; padding-inline: 16px; padding-block: 0 28px; }
 
 /* ---------- Header ---------- */
 .top { display: flex; align-items: center; justify-content: space-between; padding-block: 14px 12px; gap: 12px; }
@@ -2171,7 +2172,7 @@ function openSettings() {
     h("button", { class: "link", style: "color:var(--crimson)", onclick: function () {
       confirmSheet("Erase everything?", "This deletes " + save.games.length + " campaigns, your medals and streaks. It can't be undone.", "Erase", function () { save.games = []; save.ach = {}; save.active = {}; persist(); render(); toast("History erased"); });
     } }, ["Erase all history"]),
-    h("p", { class: "mono muted", style: "font-size:11px;text-align:center", text: "195–0 · " + PEOPLE.length + " figures · v2" })
+    h("p", { class: "mono muted", style: "font-size:11px;text-align:center", text: "195–0 · " + PEOPLE.length + " figures · v5" })
   ]);
 }
 
@@ -2181,6 +2182,7 @@ function boot() {
   var hash = (location.hash || "").slice(1); if (["play", "daily", "codex", "stats", "history"].indexOf(hash) >= 0) ui.tab = hash;
   document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { ui.tab = t.dataset.tab; closeSheet(); buzz(4); render(); scrollTop(); }); });
   document.getElementById("gear").addEventListener("click", openSettings);
+  document.querySelector(".tabs").addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheet(); });
   // Drop in-progress drafts that reference people no longer in the roster.
   ["classic", "blind", "daily"].forEach(function (m) { var g = save.active[m]; if (g && (!g.roll && !g.done || (g.picks || []).some(function (p) { return !BY_ID[p.id]; }) || (g.roll && g.roll.cands.some(function (id) { return !BY_ID[id]; })))) delete save.active[m]; });
