@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-f96f2dGsL+AIHWymD0htuQQM3+pi5pAyI4kKRVWuLkw='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-V8h3BVtHYkwoXV3dL1PRVbYwkIYoxbN3BoBgLuUjCGM='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0F1D">
@@ -66,7 +66,7 @@ html { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 textarea { -webkit-user-select: text; user-select: text; }
 /* App shell: the screen is a fixed frame. Only .scroller scrolls, so the tab bar never moves. */
-.app { position: fixed; top: 0; left: 0; right: 0; z-index: 1; display: flex; flex-direction: column; height: 100%; height: 100dvh; padding-top: env(safe-area-inset-top, 0px); }
+.app { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); }
 .scroller { position: relative; flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; overflow-anchor: none; }
 .wrap { position: relative; max-width: 540px; min-height: calc(100% + 1px); margin: 0 auto; padding-inline: 16px; padding-block: 0 28px; }
 
@@ -80,10 +80,10 @@ textarea { -webkit-user-select: text; user-select: text; }
 .icon-btn svg { width: 19px; height: 19px; stroke: var(--gold); fill: none; stroke-width: 1.8; }
 
 /* ---------- Tabs ---------- */
-.tabs { position: relative; flex: none; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px); transform: translateZ(0);
+.tabs { position: relative; flex: none; z-index: 30; padding-bottom: max(env(safe-area-inset-bottom, 0px), 6px); transform: translateZ(0);
   background: linear-gradient(180deg, rgba(10,15,29,.72), rgba(10,15,29,.96)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); }
 .tabs-in { max-width: 540px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
-.tab { min-height: 56px; padding: 10px 2px 12px; display: grid; justify-items: center; gap: 4px; color: var(--muted); font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; position: relative; }
+.tab { min-height: 50px; padding: 8px 2px 4px; display: grid; justify-items: center; gap: 4px; color: var(--muted); font: 500 10.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; position: relative; }
 .tab svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; }
 .tab svg { transition: transform .12s ease-out; }
 .tab:active svg { transform: scale(.86); }
@@ -310,7 +310,7 @@ p { margin: 0; }
 .toggle input:checked { background: var(--gold); }
 .toggle input:checked::after { transform: translateX(19px); background: #22170A; }
 textarea { width: 100%; min-height: 96px; border-radius: 12px; padding: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--parch); font: 16px/1.4 var(--mono); }
-.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; max-width: calc(100% - 32px); padding: 11px 16px; border-radius: 12px; font-weight: 500; font-size: 14px;
+.toast { position: fixed; left: 50%; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; max-width: calc(100% - 32px); padding: 11px 16px; border-radius: 12px; font-weight: 500; font-size: 14px;
   color: #22170A; background: var(--gold); box-shadow: 0 12px 30px -10px rgba(0,0,0,.7); animation: toastIn .3s cubic-bezier(.2,.9,.25,1.2); }
 @keyframes toastIn { from { transform: translate(-50%, 20px); opacity: 0; } }
 .empty { text-align: center; padding: 30px 16px; border-radius: 18px; border: 1px dashed var(--line); color: var(--muted); display: grid; gap: 10px; justify-items: center; }
@@ -2140,6 +2140,14 @@ function dragToDismiss(sheet) {
 function confirmSheet(title, msg, action, fn) {
   openSheet([h("h3", { text: title }), h("p", { class: "muted", text: msg }), h("div", { class: "row" }, [h("button", { class: "btn ghost", onclick: closeSheet }, ["Cancel"]), h("button", { class: "btn red", onclick: function () { closeSheet(); fn(); } }, [action])])]);
 }
+function screenInfo() {
+  var probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;left:0;bottom:0;width:0;height:env(safe-area-inset-bottom,0px);visibility:hidden";
+  document.body.appendChild(probe); var inset = Math.round(probe.getBoundingClientRect().height); probe.remove();
+  var bar = document.querySelector(".tabs"), gap = bar ? Math.round(innerHeight - bar.getBoundingClientRect().bottom) : 0;
+  var mode = (navigator.standalone || (window.matchMedia && matchMedia("(display-mode: standalone)").matches)) ? "home screen" : inFrame ? "in Claude" : "browser";
+  return "screen " + innerWidth + "×" + innerHeight + " · bottom inset " + inset + " · gap " + gap + " · " + mode;
+}
 function openSettings() {
   function toggle(id, label, sub, key) {
     var inp = h("input", { type: "checkbox", id: id, role: "switch", onchange: function () { save.settings[key] = inp.checked; persist(); if (key === "unlimited") render(); } });
@@ -2171,7 +2179,8 @@ function openSettings() {
     h("button", { class: "link", style: "color:var(--crimson)", onclick: function () {
       confirmSheet("Erase everything?", "This deletes " + save.games.length + " campaigns, your medals and streaks. It can't be undone.", "Erase", function () { save.games = []; save.ach = {}; save.active = {}; persist(); render(); toast("History erased"); });
     } }, ["Erase all history"]),
-    h("p", { class: "mono muted", style: "font-size:11px;text-align:center", text: "195–0 · " + PEOPLE.length + " figures · v6" })
+    h("p", { class: "mono muted", style: "font-size:11px;text-align:center", text: "195–0 · " + PEOPLE.length + " figures · v7" }),
+    h("p", { class: "mono muted", id: "screenInfo", style: "font-size:11px;text-align:center", text: screenInfo() })
   ]);
 }
 
